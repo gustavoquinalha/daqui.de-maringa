@@ -1,5 +1,13 @@
 <template>
-  <nuxt class="container mx-auto pt-4"/>
+  <div class>
+    <div class="w-full p-2 flex items-center justify-center">
+      <n-link class="btn m-2 bg-purple-600 hover:bg-purple-500 text-white" to="/">index</n-link>
+      <n-link class="btn m-2 bg-purple-600 hover:bg-purple-500 text-white" to="/app">app</n-link>
+      <n-link class="btn m-2 bg-purple-600 hover:bg-purple-500 text-white" to="/cadastro">cadastro</n-link>
+    </div>
+
+    <nuxt class="container mx-auto pt-4" />
+  </div>
 </template>
 
 <script>

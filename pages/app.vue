@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-5xl">Pagina inicial</h1>
+    <h1 class="text-5xl">App</h1>
     <div class="max-w-sm rounded overflow-hidden shadow-lg mb-4">
       <img
         class="w-full"
