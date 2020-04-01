@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-5xl">Cadastro</h1>
+    <h1 class="text-5xl">Admin</h1>
   </div>
 </template>
 
