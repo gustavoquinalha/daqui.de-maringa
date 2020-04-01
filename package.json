@@ -5,15 +5,14 @@
   "author": "Atinux",
   "private": true,
   "scripts": {
-    "dev": "MINIMAL=1 CSB=1 nuxt",
+    "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "post-update": "yarn upgrade --latest"
   },
   "dependencies": {
-    "nuxt": "^2.11.0",
-    "reqlim": "^0.0.0"
+    "nuxt": "^2.11.0"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "1.4.0"
