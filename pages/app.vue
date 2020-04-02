@@ -18,11 +18,16 @@
       <div class="flex flex-wrap -m-4">
         <div class="w-full md:w-1/2 lg:w-1/3 p-4" v-for="service in services" v-bind:key="service.id">
           <div class="rounded overflow-hidden shadow">
-            <img
+            <!-- Habilitar quando for image upload <img
               v-if="service.images && service.images.length"
               class="w-full"
               :src="service.images[0].url"
               alt="Sunset in the mountains"
+            /> -->
+            <img
+              class="w-full"
+              :src="service.cover"
+              :alt="service.nomeCompanyFantasy"
             />
             <div class="px-6 py-4 pb-2">
               <div class="font-bold text-xl mb-2">{{ service.nomeCompanyFantasy }}</div>

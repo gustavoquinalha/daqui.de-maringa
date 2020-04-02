@@ -149,8 +149,8 @@
             </div>
           </div>
 
-          <div class="mb-8 text-left">
-            <span class="block text-black text-lg mb-2 font-bold">{{form.images.name}}</span>
+          <!-- Habilitar quando for image upload <div class="mb-8 text-left">
+            <span class="block text-black text-lg mb-2 font-bold">{{ form.images.name }}</span>
             <input type="file" multiple :placeholder="form.images.placeholder" class="input" @change="fileChange" />
             <div
               v-for="(fileObj, index) in files"
@@ -164,6 +164,15 @@
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.images.error"
             >{{form.images.textError}}</span>
+          </div> -->
+
+          <div class="mb-8 text-left">
+            <span class="block text-black text-lg mb-2 font-bold">{{ form.cover.name }}</span>
+            <input type="text" :placeholder="form.cover.placeholder" class="input" v-model="form.cover.value"/>
+            <span
+              class="block text-red-600 text-sm mt-2 font-bold"
+              v-if="form.cover.error"
+            >{{form.cover.textError}}</span>
           </div>
 
           <button
@@ -315,12 +324,20 @@ export default {
           error: false,
           textError: "Erro tags"
         },
-        images: {
-          name: "Imagens",
-          value: '',
+        cover: {
+          name: "Foto da capa",
+          value: "",
+          placeholder: "URL da foto da capa",
           error: false,
-          textError: "Erro images"
-        }
+          textError: "Erro na foto da capa"
+        },
+        // Habilitar quando for image upload
+        // images: {
+        //   name: "Imagens",
+        //   value: '',
+        //   error: false,
+        //   textError: "Erro images"
+        // }
       },
       files: [],
       serviceId: ''
@@ -355,22 +372,30 @@ export default {
 
         await docRef.set(fieldValues)
 
-        this.serviceId = docRef.id
-
-        await Promise.all(
-          Array.prototype.map.call(this.files, this.uploadImageAsPromise)
-        ).then(async result => {
-
-          await docRef.update({ images: this.files.map(file => ({ url: file.url, metadata: file.metadata })) })
-
-          this.$swal({
-            icon: 'success',
-            showConfirmButton: true,
-            showCancelButton: false,
-            title: 'Muito bom!',
-            text: 'Seu serviço foi criado com sucesso :)'
-          })
+        this.$swal({
+          icon: 'success',
+          showConfirmButton: true,
+          showCancelButton: false,
+          title: 'Muito bom!',
+          text: 'Seu serviço foi criado com sucesso :)'
         })
+        
+        // Habilitar quando for image upload
+        // this.serviceId = docRef.id
+        // await Promise.all(
+        //   Array.prototype.map.call(this.files, this.uploadImageAsPromise)
+        // ).then(async result => {
+
+        //   await docRef.update({ images: this.files.map(file => ({ url: file.url, metadata: file.metadata })) })
+
+        //   this.$swal({
+        //     icon: 'success',
+        //     showConfirmButton: true,
+        //     showCancelButton: false,
+        //     title: 'Muito bom!',
+        //     text: 'Seu serviço foi criado com sucesso :)'
+        //   })
+        // })
       } catch (error) {
         this.$swal({
           icon: 'error',

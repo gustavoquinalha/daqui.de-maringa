@@ -149,10 +149,19 @@
             </div>
           </div>
 
-          <div
+          <div class="mb-8 text-left">
+            <span class="block text-black text-lg mb-2 font-bold">{{ form.cover.name }}</span>
+            <input type="text" :placeholder="form.cover.placeholder" class="input" v-model="form.cover.value"/>
+            <span
+              class="block text-red-600 text-sm mt-2 font-bold"
+              v-if="form.cover.error"
+            >{{form.cover.textError}}</span>
+          </div>
+
+          <!-- Quando for habilitado upload de imagens <div
             v-for="(file, index) in images"
             :key="index"
-          >{{ file }}</div>
+          >{{ file }}</div> -->
 
           <button
             @click="update"
@@ -301,7 +310,21 @@ export default {
           ],
           error: false,
           textError: "Erro tags"
-        }
+        },
+        cover: {
+          name: "Foto da capa",
+          value: "",
+          placeholder: "URL da foto da capa",
+          error: false,
+          textError: "Erro na foto da capa"
+        },
+        // Habilitar quando for image upload
+        // images: {
+        //   name: "Imagens",
+        //   value: '',
+        //   error: false,
+        //   textError: "Erro images"
+        // }
       },
       serviceId: '',
       images: []
@@ -312,7 +335,10 @@ export default {
       await this.bindServices()
       
       const { id } = this.$route.params
-      const service = { ...(this.services.find(serv => serv.id === id) || {}) }
+      
+      // find and clone deep
+      let service = JSON.stringify(this.services.find(serv => serv.id === id) || {})
+      service = JSON.parse(service)
 
       this.images = service.images
 
