@@ -5,18 +5,29 @@
 
       <div class="flex flex-wrap flex-col lg:flex-row">
         <div class="flex flex-col flex-1 lg:mr-8">
-          <div class="mb-8 text-left" v-for="form in forms" v-bind:key="form.name">
-            <span class="block text-black text-lg w-250 mb-2 font-bold">{{form.name}}</span>
-            <!-- v-model="form.value" -->
+          <div class="mb-8 text-left">
+            <span class="block text-black text-lg w-250 mb-2 font-bold">{{form.name.name}}</span>
             <input
               type="text"
-              :placeholder="form.placeholder"
+              :placeholder="form.name.placeholder"
               class="px-4 py-3 text-lg placeholder-gray-400 text-black relative rounded text-sm border outline-none focus:outline-none focus:shadow-outline w-full"
             />
             <span
               class="block text-red-600 text-sm w-250 mt-2 font-bold"
-              v-if="form.error"
-            >{{form.textError}}</span>
+              v-if="form.nameerror"
+            >{{form.nametextError}}</span>
+          </div>
+          <div class="mb-8 text-left">
+            <span class="block text-black text-lg w-250 mb-2 font-bold">{{ form.lastName.name }}</span>
+            <input
+              type="text"
+              :placeholder="form.lastName.placeholder"
+              class="px-4 py-3 text-lg placeholder-gray-400 text-black relative rounded text-sm border outline-none focus:outline-none focus:shadow-outline w-full"
+            />
+            <span
+              class="block text-red-600 text-sm w-250 mt-2 font-bold"
+              v-if="form.lastName.error"
+            >{{form.lastName.textError}}</span>
           </div>
           <button
             class="btn btn-large bg-purple-600 hover:bg-purple-500 text-white hidden lg:inline-block"
@@ -57,29 +68,23 @@ export default {
   },
   data() {
     return {
-      currentForm: {
-        name: "",
-        lastName: ""
-      },
-      forms: [
-        {
+      form: {
+        name: {
           name: "Nome",
-          model: "name",
-          value: "name",
+          value: "",
           placeholder: "Placeholder nome",
           erro: false,
           textError: "Erro name"
         },
-        {
+        lastName: {
           name: "Sobrenome",
-          model: "lastName",
-          value: "lastName",
+          value: "",
           placeholder: "Placeholder sobrenome",
           erro: true,
           textError: "Erro Sobrenome"
         }
-      ]
-    };
+      }
+    }
   }
 };
 </script>
