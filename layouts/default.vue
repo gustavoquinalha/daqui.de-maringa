@@ -29,11 +29,11 @@
             <ul class="flex flex-col lg:flex-row list-none ml-auto">
               <li class="nav-item">
                 <n-link
-                  class="btn m-2 bg-gray-700 hover:bg-gray-500 text-white"
+                  class="btn m-2 bg-gray-100 hover:bg-gray-500 text-black"
                   to="/app"
                 >Onde comprar</n-link>
                 <n-link
-                  class="btn m-2 bg-gray-700 hover:bg-gray-500 text-white"
+                  class="btn m-2 bg-gray-100 hover:bg-gray-500 text-black"
                   to="/blacklist"
                 >Onde não comprar</n-link>
               </li>
