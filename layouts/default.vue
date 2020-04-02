@@ -104,7 +104,12 @@ export default {
 }
 
 .input {
-  @apply bg-white px-4 py-2 text-base w-full border rounded-full text-black;
+  @apply bg-white px-4 py-3 text-base w-full border rounded-full text-black;
+}
+
+.textarea {
+  border-radius: 2rem;
+  resize: none;
 }
 
 .badge {
