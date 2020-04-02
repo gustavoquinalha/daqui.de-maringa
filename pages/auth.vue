@@ -8,6 +8,7 @@
       <div class="button--green" @click="changeCount(-1)">-1</div>
       <div class="button--green" @click="changeCount(1)">+1</div>
     </div>
+    <button @click="axiosText">axiosText</button>
   </div>
 </template>
 
@@ -32,7 +33,7 @@ export default {
           // this.$fireAuthObj.FacebookAuthProvider.PROVIDER_ID,
           // this.$fireAuthObj.TwitterAuthProvider.PROVIDER_ID,
           // this.$fireAuthObj.GithubAuthProvider.PROVIDER_ID,
-          this.$fireAuthObj.EmailAuthProvider.PROVIDER_ID,
+          // this.$fireAuthObj.EmailAuthProvider.PROVIDER_ID,
           // this.$fireAuthObj.PhoneAuthProvider.PROVIDER_ID,
           // firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
         ],
@@ -60,6 +61,10 @@ export default {
         .collection('countCollection')
         .doc('countDocument')
         .update({ count: increment })
+    },
+
+    axiosText() {
+      this.$axios.get('https://google.com').then(console.log)
     }
   }
 }
