@@ -1,5 +1,8 @@
 export default {
   mode: 'spa',
+  plugins: [
+    '@/plugins/firebaseui'
+  ],
   buildModules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/firebase'
@@ -15,7 +18,14 @@ export default {
       appId: "1:516425267656:web:55cdc9eb3af7208482e8fd"
     },
     services: {
-      auth: true
+      auth: {
+        // it is recommended to configure either a mutation or action but you can set both
+        initialize: {
+          // onAuthStateChangedMutation: 'ON_AUTH_STATE_CHANGED_MUTATION',
+          onAuthStateChangedAction: 'onAuthStateChangedAction'
+        }
+      },
+      firestore: true
     }
   },
   tailwindcss: {
