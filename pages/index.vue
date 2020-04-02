@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import app from '@firebase/app'
 export default {
 }
 </script>
