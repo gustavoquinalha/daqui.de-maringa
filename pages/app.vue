@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="w-full mx-auto">
-
       <div class="mb-4 flex items-center justify-center">
         <input
           type="text"
@@ -11,55 +10,34 @@
         />
       </div>
 
-      <!-- <div class="flex flex-wrap -m-4">
-        <div class="w-full md:w-1/2 lg:w-1/3 p-4" v-for="service in services" v-bind:key="service.id">
+      <div class="flex flex-wrap -m-4">
+        <div
+          class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4"
+          v-for="service in services"
+          v-bind:key="service.id"
+        >
           <div class="rounded overflow-hidden shadow">
             <!-- Habilitar quando for image upload <img
               v-if="service.images && service.images.length"
               class="w-full"
               :src="service.images[0].url"
               alt="Sunset in the mountains"
-            /> -->
-            <img
-              class="w-full"
-              :src="service.cover"
-              :alt="service.nomeCompanyFantasy"
-            />
+            />-->
+            <img class="w-full" :src="service.cover" :alt="service.nomeCompanyFantasy" />
             <div class="px-6 py-4 pb-2">
               <div class="font-bold text-xl mb-2">{{ service.nomeCompanyFantasy }}</div>
-              <p
-                class="text-gray-700 text-base"
-              >{{ service.description }}</p>
+              <p class="text-gray-700 text-base">{{ service.description }}</p>
             </div>
             <div class="px-6 py-4">
-              <span class="badge m-1" v-for="tag in service.tags.filter(tag=>tag.status)" :key="tag.name">{{ `#${tag.name}` }}</span>
+              <span
+                class="badge m-1"
+                v-for="tag in service.tags.filter(tag=>tag.status)"
+                :key="tag.name"
+              >{{ `#${tag.name}` }}</span>
             </div>
             <button v-if="authUser.uid" @click="edit(service)">
-              <fa class="w-10" :icon="['fa', 'edit']"/> Edit (only owner see)
+              <fa class="w-10" :icon="['fa', 'edit']" />Edit (only owner see)
             </button>
-          </div>
-        </div>
-      </div> -->
-
-      <div class="flex flex-wrap -m-4">
-        <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4" v-for="item in items" v-bind:key="item.id">
-          <div class="rounded overflow-hidden shadow">
-            <img
-              class="w-full"
-              src="https://tailwindcss.com/img/card-top.jpg"
-              alt="Sunset in the mountains"
-            />
-            <div class="px-6 py-4 pb-2">
-              <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
-              <p
-                class="text-gray-700 text-base"
-              >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
-            </div>
-            <div class="px-6 py-4">
-              <span class="badge m-1">#photography</span>
-              <span class="badge m-1">#travel</span>
-              <span class="badge m-1">#winter</span>
-            </div>
           </div>
         </div>
       </div>
@@ -68,7 +46,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from "vuex";
 export default {
   components: {},
   data() {
@@ -129,33 +107,33 @@ export default {
           image: ""
         }
       ]
-    }
+    };
   },
   computed: {
-    ...mapGetters(['services']),
-    ...mapState(['authUser'])
+    ...mapGetters(["services"]),
+    ...mapState(["authUser"])
   },
   async mounted() {
     try {
-      await this.bindServices()
+      await this.bindServices();
     } catch (error) {
       this.$swal({
-        icon: 'error',
+        icon: "error",
         showConfirmButton: false,
         showCancelButton: true,
-        title: 'error',
+        title: "error",
         text: error.message
-      })
+      });
     }
   },
   methods: {
-    ...mapActions(['bindServices']),
+    ...mapActions(["bindServices"]),
 
     edit(service) {
-      this.$router.replace({ path: `/cadastro/${service.id}` })
+      this.$router.replace({ path: `/cadastro/${service.id}` });
     }
   }
-}
+};
 </script>
 
 <style scoped>
