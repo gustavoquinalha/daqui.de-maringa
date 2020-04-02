@@ -149,6 +149,23 @@
             </div>
           </div>
 
+          <div class="mb-8 text-left">
+            <span class="block text-black text-lg mb-2 font-bold">{{form.images.name}}</span>
+            <input type="file" multiple :placeholder="form.images.placeholder" class="input" @change="fileChange" />
+            <div
+              v-for="(fileObj, index) in files"
+              :key="index"
+            >
+              {{ fileObj.loading }}
+              <br />
+              {{ fileObj.file.name }}
+            </div>
+            <span
+              class="block text-red-600 text-sm mt-2 font-bold"
+              v-if="form.images.error"
+            >{{form.images.textError}}</span>
+          </div>
+
           <button
             @click="add"
             class="btn btn-large bg-purple-600 hover:bg-purple-500 text-white hidden lg:inline-block"
@@ -297,8 +314,16 @@ export default {
           ],
           error: false,
           textError: "Erro tags"
+        },
+        images: {
+          name: "Imagens",
+          value: '',
+          error: false,
+          textError: "Erro images"
         }
-      }
+      },
+      files: [],
+      serviceId: ''
     }
   },
   mounted() {
@@ -330,12 +355,21 @@ export default {
 
         await docRef.set(fieldValues)
 
-        this.$swal({
-          icon: 'success',
-          showConfirmButton: true,
-          showCancelButton: false,
-          title: 'Muito bom!',
-          text: 'Seu serviço foi criado com sucesso :)'
+        this.serviceId = docRef.id
+
+        await Promise.all(
+          Array.prototype.map.call(this.files, this.uploadImageAsPromise)
+        ).then(async result => {
+
+          await docRef.update({ images: this.files.map(file => ({ url: file.url, metadata: file.metadata })) })
+
+          this.$swal({
+            icon: 'success',
+            showConfirmButton: true,
+            showCancelButton: false,
+            title: 'Muito bom!',
+            text: 'Seu serviço foi criado com sucesso :)'
+          })
         })
       } catch (error) {
         this.$swal({
@@ -346,7 +380,48 @@ export default {
           text: error.message
         })
       }
-    }
+    },
+
+    fileChange(event) {
+      const { files } = event.target
+      this.files = Array.prototype.map.call(files, file => ({ file }))
+    },
+
+    uploadImageAsPromise(fileObj, index) {
+      const { file } = fileObj
+      return new Promise((resolve, reject) => {
+        const storageRef = this.$fireStorage.ref(`${this.serviceId}/${file.name}-${index}`)
+        const task = storageRef.put(file)
+
+        task.on('state_changed',
+            (snapshot) => {
+                const percentage = snapshot.bytesTransferred / snapshot.totalBytes * 100
+                fileObj.loading = percentage
+                this.files = this.files.map((_fileObj_, _index_) => {
+                  if (_index_ === index) {
+                    return fileObj
+                  }
+                  return _fileObj_
+                })
+            },
+            (err) => {
+              reject(err)
+            },
+            async () => {
+              fileObj.url = await task.snapshot.ref.getDownloadURL()
+              const { type, generation, fullPath, name, size, timeCreated, contentType } = task.snapshot.metadata
+              fileObj.metadata = { type, generation, fullPath, name, size, timeCreated, contentType }
+              this.files = this.files.map((_fileObj_, _index_) => {
+                if (_index_ === index) {
+                  return fileObj
+                }
+                return _fileObj_
+              })
+              resolve(fileObj)
+            }
+        )
+    });
+}
   }
 }
 </script>

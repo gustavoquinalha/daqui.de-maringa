@@ -19,8 +19,9 @@
         <div class="w-full md:w-1/2 lg:w-1/3 p-4" v-for="service in services" v-bind:key="service.id">
           <div class="rounded overflow-hidden shadow">
             <img
+              v-if="service.images && service.images.length"
               class="w-full"
-              src="https://tailwindcss.com/img/card-top.jpg"
+              :src="service.images[0].url"
               alt="Sunset in the mountains"
             />
             <div class="px-6 py-4 pb-2">

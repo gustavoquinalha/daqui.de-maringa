@@ -30,7 +30,8 @@ export default {
           onAuthStateChangedAction: 'onAuthStateChangedAction'
         }
       },
-      firestore: true
+      firestore: true,
+      storage: true
     }
   },
   pwa: {

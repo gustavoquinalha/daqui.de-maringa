@@ -149,6 +149,11 @@
             </div>
           </div>
 
+          <div
+            v-for="(file, index) in images"
+            :key="index"
+          >{{ file }}</div>
+
           <button
             @click="update"
             class="btn btn-large bg-purple-600 hover:bg-purple-500 text-white hidden lg:inline-block"
@@ -298,7 +303,8 @@ export default {
           textError: "Erro tags"
         }
       },
-      serviceId: ''
+      serviceId: '',
+      images: []
     }
   },
   async mounted() {
@@ -306,8 +312,9 @@ export default {
       await this.bindServices()
       
       const { id } = this.$route.params
-      
       const service = { ...(this.services.find(serv => serv.id === id) || {}) }
+
+      this.images = service.images
 
       for (const key in service) {
         if (service.hasOwnProperty(key)) {
