@@ -5,7 +5,7 @@
       <nav
         class="fixed top-0 left-0 z-50 flex flex-wrap items-center justify-between navbar-expand-lg bg-white w-full border-b h-16 shadow"
       >
-        <div class="container px-4 mx-auto flex flex-wrap items-center justify-between">
+        <div class="w-full px-4 mx-auto flex flex-wrap items-center justify-between">
           <div class="relative flex justify-between items-center">
             <n-link
               to="/"
@@ -44,7 +44,7 @@
       </nav>
     </div>
 
-    <nuxt class="container mx-auto px-4 py-8" />
+    <nuxt class="w-full mx-auto px-4 py-8" />
   </div>
 </template>
 
@@ -117,11 +117,11 @@ export default {
 }
 
 .badge-lg {
-  @apply px-4 py-3 text-base;
+  @apply text-base;
 }
 
 .badge-black {
-  @apply bg-gray-700 text-white cursor-pointer;
+  @apply bg-gray-600 text-white cursor-pointer;
   &:hover {
     @apply bg-gray-600;
   }

@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div class="container mx-auto">
-      <h1 class="font-bold text-2xl font-bold mb-4 text-center">Oque você precisa nessa quarentena?</h1>
+    <div class="w-full mx-auto">
 
       <div class="mb-4 flex items-center justify-center">
         <input
@@ -11,11 +10,8 @@
           v-model="search"
         />
       </div>
-      <div class="mb-8 flex items-center justify-center flex-wrap text-center">
-        <span v-for="tag in tags" class="badge badge-lg badge-black m-1" v-bind:key="tag.name">{{tag.name}}</span>
-      </div>
 
-      <div class="flex flex-wrap -m-4">
+      <!-- <div class="flex flex-wrap -m-4">
         <div class="w-full md:w-1/2 lg:w-1/3 p-4" v-for="service in services" v-bind:key="service.id">
           <div class="rounded overflow-hidden shadow">
             <img
@@ -38,10 +34,10 @@
             </button>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="flex flex-wrap -m-4">
-        <div class="w-full md:w-1/2 lg:w-1/3 p-4" v-for="item in items" v-bind:key="item.id">
+        <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4" v-for="item in items" v-bind:key="item.id">
           <div class="rounded overflow-hidden shadow">
             <img
               class="w-full"

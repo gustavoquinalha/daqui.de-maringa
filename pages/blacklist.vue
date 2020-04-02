@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="container mx-auto">
+    <div class="mx-auto">
       <h1 class="font-bold text-xl mb-2">Blacklist</h1>
 
       <div class="flex flex-wrap -m-4">
-        <div class="w-full md:w-1/2 lg:w-1/3 p-4" v-for="item in items" v-bind:key="item.id">
+        <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4" v-for="item in items" v-bind:key="item.id">
           <div class="rounded overflow-hidden shadow">
             <img
               class="w-full"
