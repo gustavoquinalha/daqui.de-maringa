@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container mx-auto">
-      <h1 class="font-bold text-xl mb-2">Onde comprar</h1>
+      <h1 class="font-bold text-xl mb-2">Onde não comprar</h1>
 
       <div class="flex flex-wrap -m-4">
         <div class="w-full md:w-1/2 lg:w-1/3 p-4" v-for="item in items" v-bind:key="item.id">
@@ -49,27 +49,6 @@ export default {
         {
           id: 2,
           title: "Item 2",
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates consequuntur iure consequatur tempora ab impedit sed",
-          image: ""
-        },
-        {
-          id: 3,
-          title: "Item 3",
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates consequuntur iure consequatur tempora ab impedit sed",
-          image: ""
-        },
-        {
-          id: 4,
-          title: "Item 4",
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates consequuntur iure consequatur tempora ab impedit sed",
-          image: ""
-        },
-        {
-          id: 5,
-          title: "Item 5",
           description:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates consequuntur iure consequatur tempora ab impedit sed",
           image: ""
