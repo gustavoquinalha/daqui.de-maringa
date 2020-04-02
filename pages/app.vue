@@ -1,7 +1,19 @@
 <template>
   <div>
     <div class="container mx-auto">
-      <h1 class="font-bold text-xl mb-2">Onde comprar</h1>
+      <h1 class="font-bold text-2xl font-bold mb-4 text-center">Oque você precisa nessa quarentena?</h1>
+
+      <div class="mb-4 flex items-center justify-center">
+        <input
+          type="text"
+          placeholder="Exemplo: Verduras, costureira, instalação de ar-condicionado..."
+          class="input max-w-500 mx-auto"
+          v-model="search"
+        />
+      </div>
+      <div class="mb-8 flex items-center justify-center flex-wrap text-center">
+        <span v-for="tag in tags" class="badge badge-lg badge-black m-1" v-bind:key="tag.name">{{tag.name}}</span>
+      </div>
 
       <div class="flex flex-wrap -m-4">
         <div class="w-full md:w-1/2 lg:w-1/3 p-4" v-for="item in items" v-bind:key="item.id">
@@ -31,10 +43,28 @@
 
 <script>
 export default {
-  components: {
-  },
+  components: {},
   data() {
     return {
+      search: "",
+      tags: [
+        {
+          name: "Mercado",
+          status: true
+        },
+        {
+          name: "Farmácia",
+          status: true
+        },
+        {
+          name: "Arte",
+          status: true
+        },
+        {
+          name: "Verduras e legumes",
+          status: false
+        }
+      ],
       items: [
         {
           id: 1,

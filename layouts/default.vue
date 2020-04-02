@@ -113,9 +113,17 @@ export default {
 }
 
 .badge {
-  @apply inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700;
+  @apply inline-block bg-gray-200 rounded-full px-3 py-2 text-sm font-semibold text-gray-700 leading-none;
+}
+
+.badge-lg {
+  @apply px-4 py-3 text-base;
+}
+
+.badge-black {
+  @apply bg-gray-700 text-white cursor-pointer;
   &:hover {
-    @apply bg-gray-300;
+    @apply bg-gray-600;
   }
 }
 
