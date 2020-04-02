@@ -16,14 +16,14 @@
             >{{form.name.textError}}</span>
           </div>
 
-          <!-- <div class="mb-8 text-left">
+          <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.lastName.name }}</span>
             <input type="text" :placeholder="form.lastName.placeholder" class="input" v-model="form.lastName.value"/>
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.lastName.error"
             >{{form.lastName.textError}}</span>
-          </div> -->
+          </div>
 
           <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.description.name }}</span>
@@ -191,8 +191,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
   data() {
     return {
@@ -302,10 +300,7 @@ export default {
     }
   },
   mounted() {
-    this.form.name.value = this.authUser.displayName
-  },
-  computed: {
-    ...mapState(['authUser'])
+    console.log(this.params)
   },
   methods: {
     async add() {
@@ -313,30 +308,15 @@ export default {
         const fields = Object.keys(this.form)
         
         const fieldValues = fields.reduce((obj, prop) => {
-          const value = this.form[prop].value
-          const newObj = { ...obj }
-          
-          if (value) {
-            newObj[prop] = value
+          return  {
+            ...obj,
+            [prop]: this.form[prop].value
           }
-          
-          return newObj
         }, {})
 
-        const docRef = await this.$fireStore.collection('services').doc()
+        const docRef = await this.$fireStore.collection('services').add(fieldValues)
 
-        fieldValues.id = docRef.id
-        fieldValues.owner = this.authUser.uid
-
-        await docRef.set(fieldValues)
-
-        this.$swal({
-          icon: 'success',
-          showConfirmButton: true,
-          showCancelButton: false,
-          title: 'Muito bom!',
-          text: 'Seu serviço foi criado com sucesso :)'
-        })
+        console.log(docRef)
       } catch (error) {
         this.$swal({
           icon: 'error',

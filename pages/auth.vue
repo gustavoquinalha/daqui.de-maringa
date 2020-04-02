@@ -1,32 +1,26 @@
 <template>
   <div>
-    <h1 class="text-5xl">Auth</h1>
     <div id="firebaseui-auth-container"></div>
-    <div>{{ $store.state.authUser}}</div>
-    <p class="count">{{ count }}</p>
-    <div class="links">
-      <div class="button--green" @click="changeCount(-1)">-1</div>
-      <div class="button--green" @click="changeCount(1)">+1</div>
+    <div v-if="Object.keys(authUser || {}).length">
+      <div>{{ authUser }}</div>
+      <button @click="signOut">SignOut</button>
     </div>
-    <button @click="axiosText">axiosText</button>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['count'])
+    ...mapState(['authUser'])
   },
   async mounted() {
     try {
-      // Binds it on client-side
-      await this.bindCountDocument()
 
       // FirebaseUI config.
       var uiConfig = {
-        signInSuccessUrl: '/auth',
+        signInSuccessUrl: '/app',
         signInOptions: [
           // Leave the lines as is for the providers you want to offer your users.
           this.$fireAuthObj.GoogleAuthProvider.PROVIDER_ID,
@@ -49,22 +43,29 @@ export default {
       
       this.$firebaseui.start('#firebaseui-auth-container', uiConfig)
     } catch (e) {
-      console.error(e)
+      this.$swal({
+        icon: 'error',
+        showConfirmButton: false,
+        showCancelButton: true,
+        title: 'error',
+        text: error.message
+      })
     }
   },
   methods: {
-    ...mapActions(['bindCountDocument']),
-    
-    changeCount(amount) {
-      const increment = this.$fireStoreObj.FieldValue.increment(amount)
-      this.$fireStore
-        .collection('countCollection')
-        .doc('countDocument')
-        .update({ count: increment })
-    },
-
-    axiosText() {
-      this.$axios.get('https://google.com').then(console.log)
+    async signOut() {
+      try {
+        const logout = await this.$fireAuth.signOut()
+        console.log(logout)
+      } catch (e) {
+        this.$swal({
+          icon: 'error',
+          showConfirmButton: false,
+          showCancelButton: true,
+          title: 'error',
+          text: error.message
+        })
+      }
     }
   }
 }

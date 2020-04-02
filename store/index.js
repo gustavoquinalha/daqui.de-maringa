@@ -1,11 +1,7 @@
 import { vuexfireMutations, firestoreAction } from 'vuexfire'
 
 export const state = () => ({
-  
-  countDocument: {
-    count: null
-  },
-
+  services: [],
   authUser: {}
 })
 
@@ -18,13 +14,20 @@ export const mutations = {
 }
 
 export const actions = {
-  bindCountDocument: firestoreAction(async function({ bindFirestoreRef }) {
+  bindServices: firestoreAction(async function({ bindFirestoreRef }) {
     const ref = this.$fireStore
-      .collection('countCollection')
-      .doc('countDocument')
+      .collection('services')
       
-    await bindFirestoreRef('countDocument', ref, { wait: true })
+    await bindFirestoreRef('services', ref, { wait: true })
   }),
+
+  cleanupAction: firestoreAction(async function({ unbindFirestoreRef }) {
+    const ref = this.$fireStore
+      .collection('services')
+      
+    await unbindFirestoreRef('services', ref, { wait: true })
+  }),
+  
   async onAuthStateChangedAction({ commit, dispatch }, { authUser, claims }) {
     if (!authUser) {
       await dispatch('cleanupAction')
@@ -50,5 +53,8 @@ export const actions = {
 export const getters = {
   count(state) {
     return state.countDocument.count
+  },
+  services(state) {
+    return [...state.services]
   }
 }
