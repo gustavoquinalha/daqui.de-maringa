@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <h1 class="text-5xl">Pagina inicial</h1>
@@ -5,6 +6,7 @@
 </template>
 
 <script>
+import app from '@firebase/app'
 export default {
 }
 </script>

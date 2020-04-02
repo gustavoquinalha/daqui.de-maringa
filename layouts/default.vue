@@ -35,6 +35,23 @@ export default {
         rel: 'icon',
         type: 'image/x-icon',
         href: '/favicon.ico'
+      },
+      {
+        rel: 'stylesheet',
+        type: 'text/css',
+        href: 'https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.css'
+      }
+    ],
+    script: [
+      {
+        src: 'https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js',
+        defer: true,
+        async: true
+      },
+      {
+        src: 'https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.js',
+        defer: true,
+        async: true
       }
     ]
   }
