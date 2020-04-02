@@ -17,8 +17,19 @@
             <div class="flex items-center" v-if="form.type === 'radio'">
               <input
                 :id="form.name"
+                type="radio"
+                class="form-checkbox form-radio h-4 w-4 text-purple-600 transition duration-150 ease-in-out"
+              />
+              <label
+                :for="form.name"
+                class="ml-2 block text-lg leading-5 text-gray-900"
+              >{{form.name}}</label>
+            </div>
+            <div class="flex items-center" v-if="form.type === 'checkbox'">
+              <input
+                :id="form.name"
                 type="checkbox"
-                class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                class="form-checkbox h-4 w-4 text-purple-600 transition duration-150 ease-in-out"
               />
               <label
                 :for="form.name"
@@ -96,6 +107,15 @@ export default {
           name: "Seila",
           model: "seila",
           type: "radio",
+          value: "seila",
+          placeholder: "Placeholder seila",
+          erro: true,
+          textError: "Erro seila"
+        },
+        {
+          name: "Seila",
+          model: "seila",
+          type: "checkbox",
           value: "seila",
           placeholder: "Placeholder seila",
           erro: true,
