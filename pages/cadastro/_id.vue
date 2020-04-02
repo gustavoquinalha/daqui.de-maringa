@@ -16,14 +16,14 @@
             >{{form.name.textError}}</span>
           </div>
 
-          <div class="mb-8 text-left">
+          <!-- <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.lastName.name }}</span>
             <input type="text" :placeholder="form.lastName.placeholder" class="input" v-model="form.lastName.value"/>
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.lastName.error"
             >{{form.lastName.textError}}</span>
-          </div>
+          </div> -->
 
           <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.description.name }}</span>
@@ -150,9 +150,9 @@
           </div>
 
           <button
-            @click="add"
+            @click="update"
             class="btn btn-large bg-purple-600 hover:bg-purple-500 text-white hidden lg:inline-block"
-          >Adicionar</button>
+          >Alterar</button>
         </div>
 
         <div class="w-full lg:max-w-400 mx-auto">
@@ -181,9 +181,9 @@
             </div>
           </div>
           <button
-            @click="add"
+            @click="update"
             class="btn btn-large bg-purple-600 hover:bg-purple-500 text-white w-full mt-8 inline-block lg:hidden"
-          >Adicionar</button>
+          >Alterar</button>
         </div>
       </div>
     </div>
@@ -191,6 +191,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   data() {
     return {
@@ -296,15 +297,46 @@ export default {
           error: false,
           textError: "Erro tags"
         }
-      }
+      },
+      serviceId: ''
     }
   },
-  mounted() {
-    console.log(this.params)
+  async mounted() {
+    try {
+      await this.bindServices()
+      
+      const { id } = this.$route.params
+      
+      const service = { ...(this.services.find(serv => serv.id === id) || {}) }
+
+      for (const key in service) {
+        if (service.hasOwnProperty(key)) {
+          const value = service[key]
+
+          if(this.form[key]) {
+            this.form[key].value = value
+          }
+        }
+      }
+    } catch (error) {
+      this.$swal({
+        icon: 'error',
+        showConfirmButton: false,
+        showCancelButton: true,
+        title: 'error',
+        text: error.message
+      })
+    }
+  },
+  computed: {
+    ...mapGetters(['services'])
   },
   methods: {
-    async add() {
+    ...mapActions(['bindServices']),
+
+    async update() {
       try {
+        const { id } = this.$route.params
         const fields = Object.keys(this.form)
         
         const fieldValues = fields.reduce((obj, prop) => {
@@ -314,9 +346,17 @@ export default {
           }
         }, {})
 
-        const docRef = await this.$fireStore.collection('services').add(fieldValues)
+        fieldValues.id = id
 
-        console.log(docRef)
+        const docRef = await this.$fireStore.collection('services').doc(id).set(fieldValues)
+
+        this.$swal({
+          icon: 'success',
+          showConfirmButton: true,
+          showCancelButton: false,
+          title: 'Muito bom!',
+          text: 'Seu serviço foi atualizado com sucesso :)'
+        })
       } catch (error) {
         this.$swal({
           icon: 'error',
