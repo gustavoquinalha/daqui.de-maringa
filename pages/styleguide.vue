@@ -1,30 +1,37 @@
 <template>
   <div>
     <div class>
+      <h1 class="font-bold text-2xl mb-8 text-purple-600">Adicionar meu negócio</h1>
+
       <div class="flex flex-wrap flex-col lg:flex-row">
         <div class="flex flex-col flex-1 lg:mr-8">
           <div class="mb-8 text-left">
-            <h1 class="font-bold text-2xl text-purple-600">Adicionar meu negócio</h1>
-          </div>
-          <div class="mb-8 text-left">
-            <span class="block text-black text-lg mb-2 font-bold">{{form.name.name}}</span>
-            <input type="text" :placeholder="form.name.placeholder" class="input" />
+            <span class="block text-black text-lg w-250 mb-2 font-bold">{{form.name.name}}</span>
+            <input
+              type="text"
+              :placeholder="form.name.placeholder"
+              class="px-4 py-3 text-lg placeholder-gray-400 text-black relative rounded text-sm border outline-none focus:outline-none focus:shadow-outline w-full"
+            />
             <span
-              class="block text-red-600 text-sm mt-2 font-bold"
+              class="block text-red-600 text-sm w-250 mt-2 font-bold"
               v-if="form.name.error"
             >{{form.name.textError}}</span>
           </div>
           <div class="mb-8 text-left">
-            <span class="block text-black text-lg mb-2 font-bold">{{ form.lastName.name }}</span>
-            <input type="text" :placeholder="form.lastName.placeholder" class="input" />
+            <span class="block text-black text-lg w-250 mb-2 font-bold">{{ form.lastName.name }}</span>
+            <input
+              type="text"
+              :placeholder="form.lastName.placeholder"
+              class="px-4 py-3 text-lg placeholder-gray-400 text-black relative rounded text-sm border outline-none focus:outline-none focus:shadow-outline w-full"
+            />
             <span
-              class="block text-red-600 text-sm mt-2 font-bold"
+              class="block text-red-600 text-sm w-250 mt-2 font-bold"
               v-if="form.lastName.error"
             >{{form.lastName.textError}}</span>
           </div>
 
           <div class="mb-8 text-left">
-            <span class="block text-black text-lg mb-2 font-bold">{{ form.registerType.name }}</span>
+            <span class="block text-black text-lg w-250 mb-2 font-bold">{{ form.registerType.name }}</span>
             <div class="flex items-center">
               <label
                 class="inline-flex items-center cursor-pointer"
@@ -62,7 +69,7 @@
           </div>
 
           <div class="mb-8 text-left">
-            <span class="block text-black text-lg mb-2 font-bold">{{ form.tags.name }}</span>
+            <span class="block text-black text-lg w-250 mb-2 font-bold">{{ form.tags.name }}</span>
             <div class="flex items-center" v-for="tag in form.tags.value" v-bind:key="tag.name">
               <label class="inline-flex items-center cursor-pointer">
                 <input
@@ -82,14 +89,14 @@
           >Adicionar</button>
         </div>
 
-        <div class="w-full lg:max-w-400 mx-auto">
-          <div class="bg-gray-100 overflow-auto rounded mb-8" style="max-height: 400px">
+        <div class>
+          <div class="bg-gray-100 overflow-auto rounded mb-4" style="max-height: 400px">
             <pre>
               {{form}}
             </pre>
           </div>
 
-          <div class="rounded overflow-hidden bg-white shadow-lg w-full mx-auto">
+          <div class="rounded overflow-hidden bg-white shadow-lg w-full max-w-400 mx-auto">
             <img
               class="w-full"
               src="https://tailwindcss.com/img/card-top.jpg"

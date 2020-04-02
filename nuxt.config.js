@@ -34,5 +34,8 @@ export default {
   loading: {
     color: '#805ad5',
     height: '8px'
+  },
+  router: {
+    linkExactActiveClass: 'active-link',
   }
 }

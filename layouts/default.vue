@@ -1,55 +1,45 @@
 <template>
   <div class>
     <div class="flex flex-wrap w-full">
+      <div class="relative bg-white h-16 w-full"></div>
       <nav
-        class="relative flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-white w-full border-b shadow-md"
+        class="fixed top-0 left-0 z-50 flex flex-wrap items-center justify-between navbar-expand-lg bg-white w-full border-b h-16 shadow"
       >
-        <div class="container mx-auto flex flex-wrap items-center justify-between">
-          <div
-            class="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start"
-          >
+        <div class="container px-4 mx-auto flex flex-wrap items-center justify-between">
+          <div class="relative flex justify-between items-center">
             <n-link
               to="/"
-              class="text-sm leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-black"
+              class="text-md leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap text-black flex items-center"
             >
-              servicosdaqui.em/
-              <span class="font-bold">Maringá</span>
+              Serviços/
+              <span class="block font-bold">Maringá</span>
             </n-link>
-            <button
-              class="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
-              type="button"
-            >
-              <span class="block relative w-6 h-px rounded-sm bg-black"></span>
-              <span class="block relative w-6 h-px rounded-sm bg-black mt-1"></span>
-              <span class="block relative w-6 h-px rounded-sm bg-black mt-1"></span>
-            </button>
           </div>
 
-          <div class="hidden lg:flex lg:flex-grow items-center" id="example-navbar-info">
+          <div class="menu hidden lg:flex items-center">
             <ul class="flex flex-col lg:flex-row list-none ml-auto">
               <li class="nav-item">
-                <n-link
-                  class="btn m-2 bg-gray-100 hover:bg-gray-500 text-black"
-                  to="/app"
-                >Onde comprar</n-link>
-                <n-link
-                  class="btn m-2 bg-gray-100 hover:bg-gray-500 text-black"
-                  to="/blacklist"
-                >Onde não comprar</n-link>
+                <n-link class="btn m-2 hover:bg-gray-100 text-black" to="/app">Onde comprar</n-link>
+                <n-link class="btn m-2 hover:bg-gray-100 text-black" to="/blacklist">Blacklist</n-link>
               </li>
             </ul>
           </div>
 
-          <div class="hidden lg:flex lg:flex-grow items-center" id="example-navbar-info">
-            <ul class="flex flex-col lg:flex-row list-none ml-auto">
-              <li class="nav-item">
-                <n-link
-                  class="btn m-2 bg-purple-600 hover:bg-purple-500 text-white"
-                  to="/cadastro"
-                >Adicionar meu negócio</n-link>
-              </li>
-            </ul>
+          <div class="hidden lg:flex">
+            <n-link
+              class="btn-primary btn bg-purple-600 hover:bg-purple-500 text-white"
+              to="/cadastro"
+            >Adicionar meu negócio</n-link>
           </div>
+
+          <button
+            class="cursor-pointer leading-none rounded bg-purple-600 flex flex-col items-center justify-center lg:hidden w-8 h-8"
+            type="button"
+          >
+            <span class="block w-5 bg-white rounded" style="min-height: 2px"></span>
+            <span class="block w-5 bg-white rounded mt-1" style="min-height: 2px"></span>
+            <span class="block w-5 bg-white rounded mt-1" style="min-height: 2px"></span>
+          </button>
         </div>
       </nav>
     </div>
@@ -106,11 +96,15 @@ export default {
 
 <style>
 .btn {
-  @apply font-bold py-2 px-4 rounded;
+  @apply font-bold py-2 px-4 rounded-full;
 }
 
 .btn-large {
   @apply py-3 px-4 text-lg;
+}
+
+.input {
+  @apply bg-white px-4 py-2 text-base w-full border rounded-full text-black;
 }
 
 .badge {
@@ -170,5 +164,9 @@ export default {
   outline: none;
   /* box-shadow: 0 0 0 2px rgba(128, 90, 213,.7); */
   border-color: #805ad5;
+}
+
+.menu .active-link {
+  @apply bg-gray-900 text-white;
 }
 </style>
