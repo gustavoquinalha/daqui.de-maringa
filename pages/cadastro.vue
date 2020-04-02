@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="">
+    <div class>
       <h1 class="font-bold text-2xl mb-8 text-purple-600">Adicionar meu negócio</h1>
 
       <div class="flex flex-wrap flex-col lg:flex-row">
@@ -14,8 +14,8 @@
             />
             <span
               class="block text-red-600 text-sm w-250 mt-2 font-bold"
-              v-if="form.nameerror"
-            >{{form.nametextError}}</span>
+              v-if="form.name.error"
+            >{{form.name.textError}}</span>
           </div>
           <div class="mb-8 text-left">
             <span class="block text-black text-lg w-250 mb-2 font-bold">{{ form.lastName.name }}</span>
@@ -29,13 +29,30 @@
               v-if="form.lastName.error"
             >{{form.lastName.textError}}</span>
           </div>
+          <div class="mb-8 text-left">
+            <div class="flex items-center">
+              <input
+                id="register-type"
+                type="radio"
+                class="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+              />
+              <label
+                :for="form.registerType.name"
+                class="ml-2 block text-lg leading-5 text-gray-900"
+              >{{form.registerType.name}}</label>
+            </div>
+            <span
+              class="block text-red-600 text-sm w-250 mt-2 font-bold"
+              v-if="form.lastName.error"
+            >{{form.lastName.textError}}</span>
+          </div>
           <button
             class="btn btn-large bg-purple-600 hover:bg-purple-500 text-white hidden lg:inline-block"
-          >Adicionar meu negócio</button>
+          >Adicionar</button>
         </div>
 
-        <div class="">
-          <div class="rounded overflow-hidden bg-white shadow-lg w-300 mx-auto">
+        <div class>
+          <div class="rounded overflow-hidden bg-white shadow-lg max-w-300 mx-auto">
             <img
               class="w-full"
               src="https://tailwindcss.com/img/card-top.jpg"
@@ -55,7 +72,7 @@
           </div>
           <button
             class="btn btn-large bg-purple-600 hover:bg-purple-500 text-white w-full mt-8 inline-block lg:hidden"
-          >Adicionar meu negócio</button>
+          >Adicionar</button>
         </div>
       </div>
     </div>
@@ -64,8 +81,7 @@
 
 <script>
 export default {
-  components: {
-  },
+  components: {},
   data() {
     return {
       form: {
@@ -73,15 +89,22 @@ export default {
           name: "Nome",
           value: "",
           placeholder: "Placeholder nome",
-          erro: false,
+          error: false,
           textError: "Erro name"
         },
         lastName: {
           name: "Sobrenome",
           value: "",
           placeholder: "Placeholder sobrenome",
-          erro: true,
-          textError: "Erro Sobrenome"
+          error: true,
+          textError: "Erro sobrenome"
+        },
+        registerType: {
+          name: "Tipo do cadastro",
+          value: "seila",
+          placeholder: "Placeholder seila",
+          error: true,
+          textError: "Erro seila"
         }
       }
     }
