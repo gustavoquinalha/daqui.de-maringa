@@ -20,5 +20,9 @@ export default {
   },
   tailwindcss: {
     exposeConfig: true
+  },
+  loading: {
+    color: '#805ad5',
+    height: '8px'
   }
 }
