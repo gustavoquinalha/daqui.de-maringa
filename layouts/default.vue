@@ -105,18 +105,70 @@ export default {
 </script>
 
 <style>
-  .btn {
-    @apply font-bold py-2 px-4 rounded;
-  }
+.btn {
+  @apply font-bold py-2 px-4 rounded;
+}
 
-  .btn-large {
-    @apply py-3 px-4 text-lg;
-  }
+.btn-large {
+  @apply py-3 px-4 text-lg;
+}
 
 .badge {
   @apply inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700;
   &:hover {
     @apply bg-gray-300;
   }
+}
+
+.form-checkbox {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+  display: inline-block;
+  vertical-align: middle;
+  background-origin: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  flex-shrink: 0;
+  height: 1em;
+  width: 1em;
+  color: #805ad5;
+  background-color: #ebebeb;
+  border-color: #ebebeb;
+  border-width: 1px;
+  border-radius: 0.25rem;
+}
+
+.form-checkbox.form-radio {
+  border-radius: 50%;
+}
+
+.form-checkbox:checked {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e");
+  border-color: transparent;
+  background-color: currentColor;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media not print {
+  .form-checkbox::-ms-check {
+    border-width: 1px;
+    color: transparent;
+    background: inherit;
+    border-color: inherit;
+    border-radius: inherit;
+  }
+}
+
+.form-checkbox:focus {
+  outline: none;
+  /* box-shadow: 0 0 0 2px rgba(128, 90, 213,.7); */
+  border-color: #805ad5;
 }
 </style>

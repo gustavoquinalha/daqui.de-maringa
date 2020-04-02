@@ -15,12 +15,12 @@ module.exports = {
 
       black: '#000',
       white: '#fff',
-      primary: '#FFC10E',
+      primary: '#805ad5',
       secundary: '#4D4D4F',
 
-      //       primary: 'var(--color-primary)',
-      //       secondary: 'var(--color-secondary)',
-      //       neutral: 'var(--color-neutral)',
+      // primary: 'var(--color-primary)',
+      // secondary: 'var(--color-secondary)',
+      // neutral: 'var(--color-neutral)',
 
       gray: {
         10: '#fafafa',

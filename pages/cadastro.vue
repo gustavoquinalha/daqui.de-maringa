@@ -29,30 +29,74 @@
               v-if="form.lastName.error"
             >{{form.lastName.textError}}</span>
           </div>
+
           <div class="mb-8 text-left">
+            <span class="block text-black text-lg w-250 mb-2 font-bold">{{ form.registerType.name }}</span>
             <div class="flex items-center">
-              <input
-                id="register-type"
-                type="radio"
-                class="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-              />
               <label
-                :for="form.registerType.name"
-                class="ml-2 block text-lg leading-5 text-gray-900"
-              >{{form.registerType.name}}</label>
+                class="inline-flex items-center cursor-pointer"
+                for="registerType_PJ"
+                @click="form.registerType.value = 'PJ'"
+              >
+                <input
+                  :checked="form.registerType.value == 'PJ'"
+                  id="registerType_PJ"
+                  value="PJ"
+                  type="radio"
+                  name="registerType"
+                  class="form-checkbox form-radio h-4 w-4 text-purple-600 transition duration-150 ease-in-out"
+                />
+                <span class="ml-2 block text-lg leading-5 text-gray-900">Pessoa jurídica</span>
+              </label>
             </div>
-            <span
-              class="block text-red-600 text-sm w-250 mt-2 font-bold"
-              v-if="form.lastName.error"
-            >{{form.lastName.textError}}</span>
+            <div class="flex items-center">
+              <label
+                class="inline-flex items-center cursor-pointer"
+                for="registerType_PF"
+                @click="form.registerType.value = 'PF'"
+              >
+                <input
+                  :checked="form.registerType.value == 'PF'"
+                  id="registerType_PF"
+                  value="PF"
+                  name="registerType"
+                  type="radio"
+                  class="form-checkbox form-radio h-4 w-4 text-purple-600 transition duration-150 ease-in-out"
+                />
+                <span class="ml-2 block text-lg leading-5 text-gray-900">Pessoa física</span>
+              </label>
+            </div>
           </div>
+
+          <div class="mb-8 text-left">
+            <span class="block text-black text-lg w-250 mb-2 font-bold">{{ form.tags.name }}</span>
+            <div class="flex items-center" v-for="tag in form.tags.value" v-bind:key="tag">
+              <label class="inline-flex items-center cursor-pointer">
+                <input
+                  v-model="tag.status"
+                  :value="tag.status"
+                  type="checkbox"
+                  name="radio"
+                  class="form-checkbox h-4 w-4 text-purple-600 transition duration-150 ease-in-out"
+                />
+                <span class="ml-2 block text-lg leading-5 text-gray-900">{{tag.name}}</span>
+              </label>
+            </div>
+          </div>
+
           <button
             class="btn btn-large bg-purple-600 hover:bg-purple-500 text-white hidden lg:inline-block"
           >Adicionar</button>
         </div>
 
         <div class>
-          <div class="rounded overflow-hidden bg-white shadow-lg max-w-300 mx-auto">
+          <div class="bg-gray-100 overflow-auto rounded mb-4" style="max-height: 400px">
+            <pre>
+              {{form}}
+            </pre>
+          </div>
+
+          <div class="rounded overflow-hidden bg-white shadow-lg w-full max-w-400 mx-auto">
             <img
               class="w-full"
               src="https://tailwindcss.com/img/card-top.jpg"
@@ -96,18 +140,41 @@ export default {
           name: "Sobrenome",
           value: "",
           placeholder: "Placeholder sobrenome",
-          error: true,
+          error: false,
           textError: "Erro sobrenome"
         },
         registerType: {
           name: "Tipo do cadastro",
-          value: "seila",
+          value: "PJ",
           placeholder: "Placeholder seila",
-          error: true,
+          error: false,
           textError: "Erro seila"
+        },
+        tags: {
+          name: "Tags",
+          value: [
+            {
+              name: "Mercado",
+              status: true
+            },
+            {
+              name: "Farmácia",
+              status: true
+            },
+            {
+              name: "Arte",
+              status: true
+            },
+            {
+              name: "Verduras e legumes",
+              status: false
+            }
+          ],
+          error: false,
+          textError: "Erro tags"
         }
       }
-    }
+    };
   }
 };
 </script>
