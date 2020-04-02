@@ -5,7 +5,8 @@ export default {
   ],
   buildModules: [
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/firebase'
+    '@nuxtjs/firebase',
+    '@nuxtjs/axios'
   ],
   firebase: {
     config: {

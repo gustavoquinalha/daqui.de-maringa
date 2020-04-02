@@ -11,6 +11,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@nuxtjs/axios": "^5.9.7",
     "nuxt": "^2.12.2",
     "vuexfire": "^3.2.2"
   },
