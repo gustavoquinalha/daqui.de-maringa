@@ -51,10 +51,10 @@ export const actions = {
 }
 
 export const getters = {
-  count(state) {
-    return state.countDocument.count
-  },
   services(state) {
     return [...state.services]
+  },
+  isLogged(state) {
+    return state.authUser && state.authUser.uid
   }
 }

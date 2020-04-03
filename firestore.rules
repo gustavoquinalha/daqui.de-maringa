@@ -2,18 +2,11 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read: if true; 
-      allow write: if request.auth.uid != null;
-    }
 
-    match /services {
+    match /services/{serviceId} {
       allow read: if true; 
-      allow write, update, delete: if isServiceOwner();
-
-      function isServiceOwner() {
-        return resource.data.ownerId == request.auth.uid;
-      }
+      allow create: if request.resource.data.owner == request.auth.uid;
+      allow update, delete: if request.resource.data.owner == request.auth.uid && request.resource.data.owner == resource.data.owner;
     }
 
     match /settings/default {

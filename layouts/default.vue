@@ -32,6 +32,12 @@
               class="btn-primary btn bg-purple-600 hover:bg-purple-500 text-white"
               to="/cadastro"
             >Enviar meu negócio</n-link>
+            <button
+              v-if="isLogged"
+              @click="logout"
+              class="btn-primary btn bg-purple-600 hover:bg-purple-500 text-white"
+              to="/cadastro"
+            >Logout</button>
           </div>
 
           <button
@@ -71,6 +77,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   head: {
     title: "Serviços daqui de Maringá",
@@ -120,28 +128,45 @@ export default {
         width: 0,
         height: 0
       }
-    };
+    }
   },
   created() {
-    window.addEventListener("resize", this.handleResize);
-    this.handleResize();
+    window.addEventListener("resize", this.handleResize)
+    this.handleResize()
   },
   destroyed() {
-    window.removeEventListener("resize", this.handleResize);
+    window.removeEventListener("resize", this.handleResize)
+  },
+  computed: {
+    ...mapGetters(['isLogged'])
   },
   methods: {
     handleResize() {
-      this.window.width = window.innerWidth;
-      this.window.height = window.innerHeight;
+      this.window.width = window.innerWidth
+      this.window.height = window.innerHeight
 
       if (window.width > 768) {
-        this.showMenu = true;
+        this.showMenu = true
       } else {
-        this.showMenu = false;
+        this.showMenu = false
       }
+    },
+    logout() {
+      this.$fireAuth.signOut().then(() => {
+        this.$store.dispatch('onAuthStateChangedAction', { authUser: {}, claims: {} }) // clear user state memory
+        this.$router.replace({ path: '/' })
+      }).catch(error => {
+        this.$swal({
+          icon: "error",
+          showConfirmButton: false,
+          showCancelButton: true,
+          title: "error",
+          text: error.message
+        })
+      })
     }
   }
-};
+}
 </script>
 
 <style>

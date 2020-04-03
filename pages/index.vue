@@ -63,10 +63,10 @@
             </div>
             <button
               class="top-0 right-0 m-2 absolute text-gray-100 hover:text-white"
-              v-if="authUser.uid"
+              v-if="service.owner === authUser.uid"
               @click="edit(service)"
             >
-              <fa class="w-4" :icon="['fa', 'edit']" />
+              <fa class="w-4 text-black" :icon="['fa', 'edit']" />
             </button>
             <div class="h-64">
               <!-- Habilitar quando for image upload
@@ -105,7 +105,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex"
 export default {
   components: {},
   data() {
@@ -166,7 +166,7 @@ export default {
           image: ""
         }
       ]
-    };
+    }
   },
   computed: {
     ...mapGetters(["services"]),
@@ -174,7 +174,7 @@ export default {
   },
   async mounted() {
     try {
-      await this.bindServices();
+      await this.bindServices()
     } catch (error) {
       this.$swal({
         icon: "error",
@@ -182,17 +182,17 @@ export default {
         showCancelButton: true,
         title: "error",
         text: error.message
-      });
+      })
     }
   },
   methods: {
     ...mapActions(["bindServices"]),
 
     edit(service) {
-      this.$router.replace({ path: `/cadastro/${service.id}` });
+      this.$router.replace({ path: `/cadastro/${service.id}` })
     }
   }
-};
+}
 </script>
 
 <style scoped>
