@@ -10,11 +10,11 @@ service cloud.firestore {
     }
 
     match /settings/default {
-      allow read: if true; 
-      allow write, update, delete: if isAdmin();
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
       
       function isAdmin() {
-        return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'ADMIN';
+        return request.auth.token.admin == true;
       }
     }
 

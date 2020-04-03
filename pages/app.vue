@@ -169,43 +169,20 @@ export default {
       },
       showFilter: true,
       search: "",
-      tags: [
-        {
-          name: "Mercado",
-          status: true
-        },
-        {
-          name: "Farmácia",
-          status: true
-        },
-        {
-          name: "Arte",
-          status: true
-        },
-        {
-          name: "Verduras e legumes",
-          status: false
-        }
-      ],
-      delivery: [
-        {
-          name: "Disk entrega",
-          status: true
-        },
-        {
-          name: "Retirar em mãos",
-          status: true
-        }
-      ]
+      tags: [],
+      delivery: []
     };
   },
   computed: {
-    ...mapGetters(["services"]),
+    ...mapGetters(["services", 'settingDeliveries', 'settingTags']),
     ...mapState(["authUser"])
   },
   async mounted() {
     try {
+      await this.bindSetting();
       await this.bindServices();
+      this.tags = [...this.settingTags]
+      this.delivery = [...this.settingDeliveries]
     } catch (error) {
       this.$swal({
         icon: "error",
@@ -224,7 +201,7 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   methods: {
-    ...mapActions(["bindServices"]),
+    ...mapActions(["bindServices", 'bindSetting']),
 
     edit(service) {
       this.$router.replace({ path: `/cadastro/${service.id}` });

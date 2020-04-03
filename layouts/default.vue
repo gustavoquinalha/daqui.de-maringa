@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   head: {
@@ -147,12 +147,18 @@ export default {
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize)
+    this.cleanupAction()
+  },
+  async mounted() {
+    await this.bindSetting()
   },
   computed: {
     ...mapState(['authUser']),
     ...mapGetters(['isLogged'])
   },
   methods: {
+    ...mapActions(['bindSetting', 'cleanupAction']),
+
     handleResize() {
       this.window.width = window.innerWidth
       this.window.height = window.innerHeight

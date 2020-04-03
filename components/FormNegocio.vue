@@ -344,39 +344,13 @@ export default {
         },
         delivery: {
           name: 'Entrega',
-          value: [
-            {
-              name: 'Disk entrega',
-              status: true
-            },
-            {
-              name: 'Retirar em mãos',
-              status: true
-            }
-          ],
+          value: [],
           error: false,
           textError: 'Erro tags'
         },
         tags: {
           name: 'Tags',
-          value: [
-            {
-              name: 'Mercado',
-              status: true
-            },
-            {
-              name: 'Farmácia',
-              status: true
-            },
-            {
-              name: 'Arte',
-              status: true
-            },
-            {
-              name: 'Verduras e legumes',
-              status: false
-            }
-          ],
+          value: [],
           error: false,
           textError: 'Erro tags'
         },
@@ -403,19 +377,35 @@ export default {
   async mounted() {
     try {
       if (this.editMode) {
-        await this.bindServices()
-        
         const { id } = this.$route.params
     
+        await this.bindServices()
+
         // find and clone deep
         let service = JSON.stringify(this.services.find(serv => serv.id === id) || {})
         service = JSON.parse(service)
     
         this.images = service.images
+        this.form.tags.value = [...this.settingTags]
+        this.form.delivery.value = [...this.settingDeliveries]
     
         for (const key in service) {
           if (service.hasOwnProperty(key)) {
-            const value = service[key]
+            let value = service[key]
+
+            if (key === 'tags') {
+              value = this.settingTags.map(tag => {
+                tag.status = value.map(v => v.name).filter(v => v).includes(tag.name)
+                return tag
+              })
+            }
+            
+            if (key === 'delivery') {
+              value = this.settingDeliveries.map(delivery => {
+                delivery.status = value.map(v => v.name).filter(v => v).includes(delivery.name)
+                return delivery
+              })
+            }
     
             if(this.form[key]) {
               this.form[key].value = value
@@ -425,7 +415,11 @@ export default {
       } else {
         // create mode
         this.form.name.value = this.authUser.displayName
+        this.form.tags.value = [...this.settingTags]
+        this.form.delivery.value = [...this.settingDeliveries]
       }
+      
+      this.form = this.form
     } catch (error) {
       this.$swal({
         icon: 'error',
@@ -438,11 +432,11 @@ export default {
   },
   computed: {
     ...mapState(['authUser']),
-    ...mapGetters(['services', 'isLogged'])
+    ...mapGetters(['services', 'isLogged', 'settingDeliveries', 'settingTags']),
   },
   methods: {
     ...mapActions(['bindServices']),
-
+    
     async add() {
       try {
         const fields = Object.keys(this.form)
@@ -461,7 +455,9 @@ export default {
         const docRef = await this.$fireStore.collection('services').doc()
 
         fieldValues.id = docRef.id
-        fieldValues.owner = this.authUser.uid || 'NQvzSJoT5Ua8B00HnF4FpD2rqZu2'
+        fieldValues.owner = this.authUser.uid
+        fieldValues.tags = fieldValues.tags.filter(tag => tag.status)
+        fieldValues.delivery = fieldValues.delivery.filter(delivery => delivery.status)
 
         await docRef.set(fieldValues)
 
@@ -515,6 +511,9 @@ export default {
         }, {})
 
         fieldValues.id = id
+        fieldValues.owner = this.authUser.uid
+        fieldValues.tags = fieldValues.tags.filter(tag => tag.status)
+        fieldValues.delivery = fieldValues.delivery.filter(delivery => delivery.status)
 
         const docRef = await this.$fireStore.collection('services').doc(id).set(fieldValues)
 

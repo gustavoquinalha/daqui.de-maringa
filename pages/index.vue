@@ -111,70 +111,18 @@ export default {
   data() {
     return {
       search: "",
-      tags: [
-        {
-          name: "Mercado",
-          status: true
-        },
-        {
-          name: "Farmácia",
-          status: true
-        },
-        {
-          name: "Arte",
-          status: true
-        },
-        {
-          name: "Verduras e legumes",
-          status: false
-        }
-      ],
-      items: [
-        {
-          id: 1,
-          title: "Item 1",
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates consequuntur iure consequatur tempora ab impedit sed",
-          image: ""
-        },
-        {
-          id: 2,
-          title: "Item 2",
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates consequuntur iure consequatur tempora ab impedit sed",
-          image: ""
-        },
-        {
-          id: 3,
-          title: "Item 3",
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates consequuntur iure consequatur tempora ab impedit sed",
-          image: ""
-        },
-        {
-          id: 4,
-          title: "Item 4",
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates consequuntur iure consequatur tempora ab impedit sed",
-          image: ""
-        },
-        {
-          id: 5,
-          title: "Item 5",
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates consequuntur iure consequatur tempora ab impedit sed",
-          image: ""
-        }
-      ]
+      tags: []
     }
   },
   computed: {
-    ...mapGetters(["services"]),
+    ...mapGetters(['settingTags', "services"]),
     ...mapState(["authUser"])
   },
   async mounted() {
     try {
+      await this.bindSetting()
       await this.bindServices()
+      this.tags = [...this.settingTags]
     } catch (error) {
       this.$swal({
         icon: "error",
@@ -186,7 +134,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["bindServices"]),
+    ...mapActions(["bindServices", 'bindSetting']),
 
     edit(service) {
       this.$router.replace({ path: `/cadastro/${service.id}` })

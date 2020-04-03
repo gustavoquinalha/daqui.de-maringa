@@ -2,7 +2,8 @@ import { vuexfireMutations, firestoreAction } from 'vuexfire'
 
 export const state = () => ({
   services: [],
-  authUser: {}
+  authUser: {},
+  setting: {}
 })
 
 export const mutations = {
@@ -19,6 +20,13 @@ export const actions = {
       .collection('services')
       
     await bindFirestoreRef('services', ref, { wait: true })
+  }),
+
+  bindSetting: firestoreAction(async function({ bindFirestoreRef }) {
+    const ref = this.$fireStore
+      .collection('settings').doc('default')
+      
+    await bindFirestoreRef('setting', ref, { wait: true })
   }),
 
   cleanupAction: firestoreAction(async function({ unbindFirestoreRef }) {
@@ -45,7 +53,7 @@ export const actions = {
       displayName,
       photoURL, // results in photoURL being undefined for server auth
       // use custom claims to control access (see https://firebase.google.com/docs/auth/admin/custom-claims)
-      isAdmin: claims.custom_claim
+      isAdmin: claims.admin
     })
   }
 }
@@ -53,6 +61,15 @@ export const actions = {
 export const getters = {
   services(state) {
     return [...state.services]
+  },
+  setting(state) {
+    return state.setting
+  },
+  settingTags(state) {
+    return state.setting.tags && state.setting.tags.map(tag => ({ name: tag.name, status: false })) || []
+  },
+  settingDeliveries(state) {
+    return state.setting.delivery && state.setting.delivery.map(delivery => ({ name: delivery.name, status: false })) || []
   },
   isLogged(state) {
     return state.authUser && state.authUser.uid
