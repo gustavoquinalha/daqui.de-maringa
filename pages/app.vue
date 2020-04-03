@@ -60,6 +60,7 @@
                     type="checkbox"
                     name="tags"
                     class="form-checkbox h-4 w-4 text-purple-600 transition duration-150 ease-in-out"
+                    @input="toggleTag(t)"
                   />
                   <span class="ml-2 block text-lg leading-5 text-gray-900">{{t.name}}</span>
                 </label>
@@ -76,6 +77,7 @@
                     type="checkbox"
                     name="delivery"
                     class="form-checkbox h-4 w-4 text-purple-600 transition duration-150 ease-in-out"
+                    @input="toggleDelivery(dlvr)"
                   />
                   <span class="ml-2 block text-lg leading-5 text-gray-900">{{dlvr.name}}</span>
                 </label>
@@ -93,7 +95,7 @@
         <div class="flex flex-wrap -m-4 flex-grow-1 w-full mx-auto my-4 md:my-4 h-full">
           <div
             class="w-full lg:w-1/2 xl:w-1/3 p-4"
-            v-for="service in services"
+            v-for="service in servicesFiltred"
             v-bind:key="service.id"
           >
             <div
@@ -170,7 +172,8 @@ export default {
       showFilter: true,
       search: "",
       tags: [],
-      delivery: []
+      delivery: [],
+      servicesFiltred: []
     };
   },
   computed: {
@@ -183,6 +186,7 @@ export default {
       await this.bindServices();
       this.tags = [...this.settingTags]
       this.delivery = [...this.settingDeliveries]
+      this.servicesFiltred = this.services
     } catch (error) {
       this.$swal({
         icon: "error",
@@ -215,7 +219,35 @@ export default {
       } else {
         this.showFilter = false;
       }
-    }
+    },
+    
+    toggleTag(tag) {
+      tag.status = !tag.status
+      
+      const tags = this.tags.filter(tag => tag.status).map(tag => tag.name)
+
+      if (tags.length) {
+        this.servicesFiltred = this.services.filter(service => {
+          return service.tags.find(tag => tags.includes(tag.name))
+        })
+      } else {
+        this.servicesFiltred = this.services
+      }
+    },
+    
+    toggleDelivery(delivery) {
+      delivery.status = !delivery.status
+      
+      const deliveries = this.delivery.filter(delivery => delivery.status).map(delivery => delivery.name)
+
+      if (deliveries.length) {
+        this.servicesFiltred = this.services.filter(service => {
+          return service.delivery.find(delivery => deliveries.includes(delivery.name))
+        })
+      } else {
+        this.servicesFiltred = this.services
+      }
+    },
   }
 };
 </script>

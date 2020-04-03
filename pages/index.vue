@@ -42,7 +42,7 @@
           v-for="tag in tags"
           class="badge badge-lg badge-select m-1 focus:outline-none focus:border-purple-500"
           :class="{active : tag.status}"
-          @click="tag.status = !tag.status"
+          @click="toggleTag(tag)"
           v-bind:key="tag.name"
         >{{tag.name}}</button>
       </div>
@@ -50,7 +50,7 @@
       <div class="flex flex-wrap -m-4 flex-grow-1 w-full mx-auto h-full">
         <div
           class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4"
-          v-for="service in services"
+          v-for="service in servicesFiltred"
           v-bind:key="service.id"
         >
           <div class="card h-full rounded overflow-hidden shadow hover:shadow-lg hover:text-purple-600 relative cursor-pointer">
@@ -111,7 +111,8 @@ export default {
   data() {
     return {
       search: "",
-      tags: []
+      tags: [],
+      servicesFiltred: []
     }
   },
   computed: {
@@ -123,6 +124,7 @@ export default {
       await this.bindSetting()
       await this.bindServices()
       this.tags = [...this.settingTags]
+      this.servicesFiltred = this.services
     } catch (error) {
       this.$swal({
         icon: "error",
@@ -138,7 +140,21 @@ export default {
 
     edit(service) {
       this.$router.replace({ path: `/cadastro/${service.id}` })
-    }
+    },
+
+    toggleTag(tag) {
+      tag.status = !tag.status
+      
+      const tags = this.tags.filter(tag => tag.status).map(tag => tag.name)
+
+      if (tags.length) {
+        this.servicesFiltred = this.services.filter(service => {
+          return service.tags.find(tag => tags.includes(tag.name))
+        })
+      } else {
+        this.servicesFiltred = this.services
+      }
+    },
   }
 }
 </script>
