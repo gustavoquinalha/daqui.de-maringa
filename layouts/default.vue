@@ -29,15 +29,26 @@
 
           <div class="hidden md:flex justify-end w-1/3">
             <n-link
-              class="btn-primary btn bg-purple-600 hover:bg-purple-500 text-white"
+              v-if="isLogged && authUser && authUser.isAdmin"
+              class="btn-primary btn bg-purple-600 hover:bg-purple-500 text-white flex align-center mr-4"
+              to="/admin"
+            >
+              <span>Administração</span>
+            </n-link>
+
+            <n-link
+              class="btn-primary btn bg-purple-600 hover:bg-purple-500 text-white mr-4"
               to="/cadastro"
             >Enviar meu negócio</n-link>
+
             <button
               v-if="isLogged"
               @click="logout"
-              class="btn-primary btn bg-purple-600 hover:bg-purple-500 text-white"
-              to="/cadastro"
-            >Logout</button>
+              class="btn-primary btn bg-purple-600 hover:bg-purple-500 text-white flex align-center"
+            >
+              <img class="rounded-full w-6 mr-4" :src="authUser.photoURL" :alt="authUser.displayName" />
+              <span>Logout</span>
+            </button>
           </div>
 
           <button
@@ -77,7 +88,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   head: {
@@ -138,6 +149,7 @@ export default {
     window.removeEventListener("resize", this.handleResize)
   },
   computed: {
+    ...mapState(['authUser']),
     ...mapGetters(['isLogged'])
   },
   methods: {
