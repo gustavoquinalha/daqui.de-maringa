@@ -2,14 +2,22 @@
   <div>
     <div class="container mx-auto">
       <div class="flex flex-wrap flex-col lg:flex-row">
-        <div class="flex flex-col flex-1 lg:mr-4 lg:pr-8 overflow-y-auto py-8" style="height: calc(100vh - 64px)">
+        <div
+          class="flex flex-col flex-1 lg:mr-4 lg:pr-8 overflow-y-auto py-8"
+          style="height: calc(100vh - 64px)"
+        >
           <div class="mb-8 text-left">
             <h1 class="font-bold text-2xl text-black text-center">Adicionar meu negócio</h1>
           </div>
 
           <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{form.name.name}}</span>
-            <input type="text" :placeholder="form.name.placeholder" class="input focus:outline-none focus:bg-white focus:border-purple-500" v-model="form.name.value" />
+            <input
+              type="text"
+              :placeholder="form.name.placeholder"
+              class="input focus:outline-none focus:bg-white focus:border-purple-500"
+              v-model="form.name.value"
+            />
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.name.error"
@@ -23,11 +31,17 @@
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.lastName.error"
             >{{form.lastName.textError}}</span>
-          </div> -->
+          </div>-->
 
           <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.description.name }}</span>
-            <textarea maxlength="200" rows="5" :placeholder="form.description.placeholder" class="input textarea  focus:outline-none focus:bg-white focus:border-purple-500" v-model="form.description.value"/></textarea>
+            <textarea
+              maxlength="200"
+              rows="5"
+              :placeholder="form.description.placeholder"
+              class="input textarea focus:outline-none focus:bg-white focus:border-purple-500"
+              v-model="form.description.value"
+            ></textarea>
             <span class="text-sm mt-2" v-text="(200 - form.description.value.length)"></span>
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
@@ -73,24 +87,28 @@
             </div>
           </div>
 
-          <div
-            class="mb-8 text-left"
-            v-if="form.registerType.value == 'PJ'"
-          >
+          <div class="mb-8 text-left" v-if="form.registerType.value == 'PJ'">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.cnpj.name }}</span>
-            <input type="text" :placeholder="form.cnpj.placeholder" class="input focus:outline-none focus:bg-white focus:border-purple-500" v-model="form.cnpj.value"/>
+            <input
+              type="text"
+              :placeholder="form.cnpj.placeholder"
+              class="input focus:outline-none focus:bg-white focus:border-purple-500"
+              v-model="form.cnpj.value"
+            />
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.cnpj.error"
             >{{form.cnpj.textError}}</span>
           </div>
 
-          <div
-            class="mb-8 text-left"
-            v-if="form.registerType.value == 'PF'"
-          >
+          <div class="mb-8 text-left" v-if="form.registerType.value == 'PF'">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.cpf.name }}</span>
-            <input type="text" :placeholder="form.cpf.placeholder" class="input focus:outline-none focus:bg-white focus:border-purple-500" v-model="form.cpf.value"/>
+            <input
+              type="text"
+              :placeholder="form.cpf.placeholder"
+              class="input focus:outline-none focus:bg-white focus:border-purple-500"
+              v-model="form.cpf.value"
+            />
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.cpf.error"
@@ -99,7 +117,12 @@
 
           <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.nameCompany.name }}</span>
-            <input type="text" :placeholder="form.nameCompany.placeholder" class="input focus:outline-none focus:bg-white focus:border-purple-500" v-model="form.nameCompany.value"/>
+            <input
+              type="text"
+              :placeholder="form.nameCompany.placeholder"
+              class="input focus:outline-none focus:bg-white focus:border-purple-500"
+              v-model="form.nameCompany.value"
+            />
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.nameCompany.error"
@@ -108,7 +131,12 @@
 
           <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.nomeCompanyFantasy.name }}</span>
-            <input type="text" :placeholder="form.nomeCompanyFantasy.placeholder" class="input focus:outline-none focus:bg-white focus:border-purple-500" v-model="form.nomeCompanyFantasy.value"/>
+            <input
+              type="text"
+              :placeholder="form.nomeCompanyFantasy.placeholder"
+              class="input focus:outline-none focus:bg-white focus:border-purple-500"
+              v-model="form.nomeCompanyFantasy.value"
+            />
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.nomeCompanyFantasy.error"
@@ -117,7 +145,12 @@
 
           <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.cep.name }}</span>
-            <input type="text" :placeholder="form.cep.placeholder" class="input focus:outline-none focus:bg-white focus:border-purple-500" v-model="form.cep.value"/>
+            <input
+              type="text"
+              :placeholder="form.cep.placeholder"
+              class="input focus:outline-none focus:bg-white focus:border-purple-500"
+              v-model="form.cep.value"
+            />
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.cep.error"
@@ -126,7 +159,11 @@
 
           <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.delivery.name }}</span>
-            <div class="flex items-center" v-for="dlvr in form.delivery.value" v-bind:key="dlvr.name">
+            <div
+              class="flex items-center"
+              v-for="dlvr in form.delivery.value"
+              v-bind:key="dlvr.name"
+            >
               <label class="inline-flex items-center cursor-pointer">
                 <input
                   v-model="dlvr.status"
@@ -171,11 +208,16 @@
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.images.error"
             >{{form.images.textError}}</span>
-          </div> -->
+          </div>-->
 
           <div class="text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.cover.name }}</span>
-            <input type="text" :placeholder="form.cover.placeholder" class="input focus:outline-none focus:bg-white focus:border-purple-500" v-model="form.cover.value"/>
+            <input
+              type="text"
+              :placeholder="form.cover.placeholder"
+              class="input focus:outline-none focus:bg-white focus:border-purple-500"
+              v-model="form.cover.value"
+            />
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.cover.error"
@@ -185,7 +227,7 @@
           <!-- <button
             @click="add"
             class="btn btn-large bg-green-600 hover:bg-green-500 text-white hidden lg:inline-block"
-          >Adicionar</button> -->
+          >Adicionar</button>-->
         </div>
 
         <div class="w-full lg:max-w-400 mx-auto py-8">
@@ -193,27 +235,36 @@
             <pre>
               {{form}}
             </pre>
-          </div> -->
+          </div>-->
 
-          <div class="rounded overflow-hidden bg-white shadow-lg w-full mx-auto">
+          <div class="card rounded overflow-hidden shadow hover:shadow-lg hover:text-purple-600 relative cursor-pointer">
+            <div class="top-0 left-0 p-2 absolute">
+              <span
+                class="badge m-1"
+                v-for="tag in form.tags.value.filter(tag=>tag.status)"
+                :key="tag.name"
+              >{{ `#${tag.name}` }}</span>
+            </div>
             <img
               class="w-full"
               src="https://tailwindcss.com/img/card-top.jpg"
               alt="Sunset in the mountains"
             />
-            <div class="px-6 pt-4">
-              <div class="font-bold text-xl mb-2 fill-current">{{form.nameCompany.value ? form.nameCompany.value : 'Nome da empresa'}}</div>
+            <div class="px-6 pt-3 pb-5">
+              <div
+                class="font-bold text-xl mb-2 fill-current"
+              >{{form.nameCompany.value ? form.nameCompany.value : 'Nome da empresa'}}</div>
               <p
                 class="text-gray-700 text-base"
               >{{form.description.value ? form.description.value : 'Descrição'}}</p>
             </div>
-            <div class="px-6 py-4 -mx-2">
-              <div class="inline-block" v-for="tag in form.tags.value" v-bind:key="tag.name">
-                <span class="badge m-1" v-if="tag.status == true">
-                  {{`#${tag.name}`}}
-                </span>
-              </div>
-            </div>
+            <!-- <div class="px-6 py-4 -mx-2">
+              <div
+                class="inline-block badge m-1"
+                v-for="tag in form.tags.value.filter(tag=>tag.status)"
+                v-bind:key="tag.name"
+              >{{`#${tag.name}`}}</div>
+            </div>-->
           </div>
           <button
             @click="add"
@@ -226,7 +277,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -305,7 +356,7 @@ export default {
             {
               name: "Retirar em mãos",
               status: true
-            },
+            }
           ],
           error: false,
           textError: "Erro tags"
@@ -339,7 +390,7 @@ export default {
           placeholder: "URL da foto da capa",
           error: false,
           textError: "Erro na foto da capa"
-        },
+        }
         // Habilitar quando for image upload
         // images: {
         //   name: "Imagens",
@@ -349,45 +400,45 @@ export default {
         // }
       },
       files: [],
-      serviceId: ''
-    }
+      serviceId: ""
+    };
   },
   mounted() {
-    this.form.name.value = this.authUser.displayName
+    this.form.name.value = this.authUser.displayName;
   },
   computed: {
-    ...mapState(['authUser'])
+    ...mapState(["authUser"])
   },
   methods: {
     async add() {
       try {
-        const fields = Object.keys(this.form)
+        const fields = Object.keys(this.form);
 
         const fieldValues = fields.reduce((obj, prop) => {
-          const value = this.form[prop].value
-          const newObj = { ...obj }
+          const value = this.form[prop].value;
+          const newObj = { ...obj };
 
           if (value) {
-            newObj[prop] = value
+            newObj[prop] = value;
           }
 
-          return newObj
-        }, {})
+          return newObj;
+        }, {});
 
-        const docRef = await this.$fireStore.collection('services').doc()
+        const docRef = await this.$fireStore.collection("services").doc();
 
-        fieldValues.id = docRef.id
-        fieldValues.owner = this.authUser.uid
+        fieldValues.id = docRef.id;
+        fieldValues.owner = this.authUser.uid;
 
-        await docRef.set(fieldValues)
+        await docRef.set(fieldValues);
 
         this.$swal({
-          icon: 'success',
+          icon: "success",
           showConfirmButton: true,
           showCancelButton: false,
-          title: 'Muito bom!',
-          text: 'Seu serviço foi criado com sucesso :)'
-        })
+          title: "Muito bom!",
+          text: "Seu serviço foi criado com sucesso :)"
+        });
 
         // Habilitar quando for image upload
         // this.serviceId = docRef.id
@@ -407,57 +458,77 @@ export default {
         // })
       } catch (error) {
         this.$swal({
-          icon: 'error',
+          icon: "error",
           showConfirmButton: false,
           showCancelButton: true,
-          title: 'error',
+          title: "error",
           text: error.message
-        })
+        });
       }
     },
 
     fileChange(event) {
-      const { files } = event.target
-      this.files = Array.prototype.map.call(files, file => ({ file }))
+      const { files } = event.target;
+      this.files = Array.prototype.map.call(files, file => ({ file }));
     },
 
     uploadImageAsPromise(fileObj, index) {
-      const { file } = fileObj
+      const { file } = fileObj;
       return new Promise((resolve, reject) => {
-        const storageRef = this.$fireStorage.ref(`${this.serviceId}/${file.name}-${index}`)
-        const task = storageRef.put(file)
+        const storageRef = this.$fireStorage.ref(
+          `${this.serviceId}/${file.name}-${index}`
+        );
+        const task = storageRef.put(file);
 
-        task.on('state_changed',
-            (snapshot) => {
-                const percentage = snapshot.bytesTransferred / snapshot.totalBytes * 100
-                fileObj.loading = percentage
-                this.files = this.files.map((_fileObj_, _index_) => {
-                  if (_index_ === index) {
-                    return fileObj
-                  }
-                  return _fileObj_
-                })
-            },
-            (err) => {
-              reject(err)
-            },
-            async () => {
-              fileObj.url = await task.snapshot.ref.getDownloadURL()
-              const { type, generation, fullPath, name, size, timeCreated, contentType } = task.snapshot.metadata
-              fileObj.metadata = { type, generation, fullPath, name, size, timeCreated, contentType }
-              this.files = this.files.map((_fileObj_, _index_) => {
-                if (_index_ === index) {
-                  return fileObj
-                }
-                return _fileObj_
-              })
-              resolve(fileObj)
-            }
-        )
-    });
-}
+        task.on(
+          "state_changed",
+          snapshot => {
+            const percentage =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            fileObj.loading = percentage;
+            this.files = this.files.map((_fileObj_, _index_) => {
+              if (_index_ === index) {
+                return fileObj;
+              }
+              return _fileObj_;
+            });
+          },
+          err => {
+            reject(err);
+          },
+          async () => {
+            fileObj.url = await task.snapshot.ref.getDownloadURL();
+            const {
+              type,
+              generation,
+              fullPath,
+              name,
+              size,
+              timeCreated,
+              contentType
+            } = task.snapshot.metadata;
+            fileObj.metadata = {
+              type,
+              generation,
+              fullPath,
+              name,
+              size,
+              timeCreated,
+              contentType
+            };
+            this.files = this.files.map((_fileObj_, _index_) => {
+              if (_index_ === index) {
+                return fileObj;
+              }
+              return _fileObj_;
+            });
+            resolve(fileObj);
+          }
+        );
+      });
+    }
   }
-}
+};
 </script>
 
 <style scoped>

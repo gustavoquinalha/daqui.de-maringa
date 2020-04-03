@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div class="antialiased text-body font-body bg-white">
     <div class="flex flex-wrap w-full">
       <div class="relative bg-white h-16 w-full"></div>
       <nav
@@ -16,12 +16,18 @@
             </n-link>
           </div>
 
-          <div class="menu w-1/3 hidden lg:flex items-center justify-center">
-            <n-link class="btn m-2 hover:bg-gray-25 text-black" to="/app">Onde comprar</n-link>
-            <n-link class="btn m-2 hover:bg-gray-25 text-black" to="/blacklist">Blacklist</n-link>
+          <div class="menu w-1/3 hidden md:flex items-center justify-center">
+            <n-link
+              class="btn m-2 hover:bg-gray-25 text-black whitespace-no-wrap"
+              to="/app"
+            >Onde comprar</n-link>
+            <n-link
+              class="btn m-2 hover:bg-gray-25 text-black whitespace-no-wrap"
+              to="/blacklist"
+            >Blacklist</n-link>
           </div>
 
-          <div class="hidden lg:flex justify-end w-1/3">
+          <div class="hidden md:flex justify-end w-1/3">
             <n-link
               class="btn-primary btn bg-purple-600 hover:bg-purple-500 text-white"
               to="/cadastro"
@@ -29,17 +35,16 @@
           </div>
 
           <button
-            class="cursor-pointer bg-purple-600 hover:bg-purple-500 leading-none rounded-full flex flex-col items-center justify-center lg:hidden w-8 h-8 focus:outline-none focus:bg-purple-500 focus:border-purple-500"
+            class="cursor-pointer bg-purple-600 hover:bg-purple-500 text-white leading-none rounded-full flex flex-col items-center justify-center md:hidden w-8 h-8 focus:outline-none focus:border-purple-500"
             type="button"
             @click="showMenu = !showMenu"
           >
-            <span class="block w-4 bg-white rounded-full" style="min-height: 1px"></span>
-            <span class="block w-4 bg-white rounded-full mt-1" style="min-height: 1px"></span>
-            <span class="block w-4 bg-white rounded-full mt-1" style="min-height: 1px"></span>
+            <fa class="w-3 current-fill" :icon="['fa', 'bars']" v-show="!showMenu" />
+            <fa class="w-3 current-fill" :icon="['fa', 'times']" v-show="showMenu" />
           </button>
           <div
             v-show="showMenu"
-            class="block lg:hidden bg-white border-b p-8 w-full fixed left-0 z-100 shadow"
+            class="block md:hidden bg-white border-b p-8 w-full fixed left-0 z-100 shadow"
             style="top: 4rem"
           >
             <div class="flex flex-col items-center justify-center" @click="showMenu = !showMenu">
@@ -52,7 +57,7 @@
                 to="/blacklist"
               >Blacklist</n-link>
               <n-link
-                class="btn m-2 bg-gray-100 hover:bg-gray-200 text-black"
+                class="btn m-2 bg-gray-100 hover:bg-gray-200 text-black whitespace-no-wrap"
                 to="/cadastro"
               >Enviar meu negócio</n-link>
             </div>
@@ -110,8 +115,31 @@ export default {
   },
   data() {
     return {
-      showMenu: true
+      showMenu: false,
+      window: {
+        width: 0,
+        height: 0
+      }
     };
+  },
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+  },
+  methods: {
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+
+      if (window.width > 768) {
+        this.showMenu = true;
+      } else {
+        this.showMenu = false;
+      }
+    }
   }
 };
 </script>

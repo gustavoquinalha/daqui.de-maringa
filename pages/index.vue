@@ -53,7 +53,7 @@
           v-for="service in services"
           v-bind:key="service.id"
         >
-          <div class="h-full rounded overflow-hidden shadow relative">
+          <div class="card h-full rounded overflow-hidden shadow hover:shadow-lg hover:text-purple-600 relative cursor-pointer">
             <div class="top-0 left-0 p-2 absolute">
               <span
                 class="badge m-1"

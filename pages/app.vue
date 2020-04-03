@@ -2,9 +2,18 @@
   <div>
     <div class="w-full mx-auto">
       <div class="flex w-full">
-        <div class="sidebar-relative p-6 md:p-8 relative hidden md:block"></div>
-        <div class="sidebar p-6 md:p-8 hidden md:block border-r h-full">
-          <div class="mb-4 flex flex-col items-center justify-center">
+        <div v-show="showFilter" class="sidebar-relative p-6 md:p-8 relative block"></div>
+        <div v-show="showFilter" class="sidebar p-6 md:p-8 block md:border-r">
+          <div class="mb-4 flex flex-col items-center justify-center relative">
+            <button
+              class="absolute cursor-pointer bg-gray-600 hover:bg-gray-500 text-white leading-none rounded-full flex flex-col items-center justify-center md:hidden w-8 h-8 focus:outline-none focus:border-purple-500"
+              style="top: -8px; right: -8px"
+              type="button"
+              @click="showFilter = !showFilter"
+            >
+              <fa class="w-3 current-fill" :icon="['fa', 'times']" />
+            </button>
+
             <div class="w-full mb-6">
               <span class="block text-black mb-1 font-bold">Oque você precisa?</span>
               <input
@@ -75,7 +84,7 @@
 
             <div class="w-full">
               <button
-                class="w-full btn bg-purple-600 hover:bg-purple-500 text-white w-full"
+                class="w-full btn md:border-0 text-purple-600 md:text-white hover:text-white border-2 border-purple-600 bg-white hover:bg-purple-600 md:bg-purple-600 md:hover:bg-purple-500 text-white w-full"
               >Filtrar resultados</button>
             </div>
           </div>
@@ -135,10 +144,16 @@
 
     <div class="relative block md:hidden p-2 h-16"></div>
 
-    <div class="flex md:hidden items-center justify-center fixed bottom-0 left-0 w-full p-2 border-t bg-white z-100 h-16">
+    <div
+      class="flex md:hidden items-center justify-center fixed bottom-0 left-0 w-full p-2 border-t bg-white z-100 h-16"
+    >
       <button
-        class="w-full btn bg-purple-600 hover:bg-purple-500 text-white w-full inline-block"
-      >Filtrar resultados</button>
+        @click="showFilter = !showFilter"
+        class="w-full btn bg-purple-600 hover:bg-purple-500 text-white w-full inline-block focus:outline-none focus:border-purple-500"
+      >
+        <span v-if="!showFilter">Mostrar filtro</span>
+        <span v-if="showFilter">Esconder filtro</span>
+      </button>
     </div>
   </div>
 </template>
@@ -149,6 +164,10 @@ export default {
   components: {},
   data() {
     return {
+      window: {
+        width: 0
+      },
+      showFilter: true,
       search: "",
       tags: [
         {
@@ -234,11 +253,28 @@ export default {
       });
     }
   },
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+  },
   methods: {
     ...mapActions(["bindServices"]),
 
     edit(service) {
       this.$router.replace({ path: `/cadastro/${service.id}` });
+    },
+
+    handleResize() {
+      this.window.width = window.innerWidth;
+
+      if (this.window.width > 768) {
+        this.showFilter = true;
+      } else {
+        this.showFilter = false;
+      }
     }
   }
 };
@@ -247,12 +283,33 @@ export default {
 <style scoped>
 .sidebar-relative,
 .sidebar {
-  width: 350px;
-  min-width: 350px;
   height: calc(100vh - 64px);
 }
 
 .sidebar {
-  @apply fixed left-0 bottom-0 overflow-y-auto overflow-x-hidden;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  /* height: 100%; */
+}
+
+.sidebar-relative {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .sidebar-relative,
+  .sidebar {
+    width: 350px;
+    min-width: 350px;
+  }
+
+  .sidebar-relative {
+    display: block;
+  }
+}
+
+.sidebar {
+  @apply fixed left-0 bottom-0 overflow-y-auto overflow-x-hidden z-100 bg-white;
 }
 </style>
