@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div class>
+    <div class="container mx-auto">
       <div class="flex flex-wrap flex-col lg:flex-row">
-        <div class="flex flex-col flex-1 lg:mr-8 lg:pr-8 overflow-y-auto" style="height: calc(100vh - 130px)">
+        <div class="flex flex-col flex-1 lg:mr-4 lg:pr-8 overflow-y-auto py-8" style="height: calc(100vh - 64px)">
           <div class="mb-8 text-left">
-            <h1 class="font-bold text-2xl text-purple-600">Adicionar meu negócio</h1>
+            <h1 class="font-bold text-2xl text-black text-center">Adicionar meu negócio</h1>
           </div>
 
           <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{form.name.name}}</span>
-            <input type="text" :placeholder="form.name.placeholder" class="input" v-model="form.name.value" />
+            <input type="text" :placeholder="form.name.placeholder" class="input focus:outline-none focus:bg-white focus:border-purple-500" v-model="form.name.value" />
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.name.error"
@@ -18,7 +18,7 @@
 
           <!-- <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.lastName.name }}</span>
-            <input type="text" :placeholder="form.lastName.placeholder" class="input" v-model="form.lastName.value"/>
+            <input type="text" :placeholder="form.lastName.placeholder" class="input focus:outline-none focus:bg-white focus:border-purple-500" v-model="form.lastName.value"/>
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.lastName.error"
@@ -27,7 +27,8 @@
 
           <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.description.name }}</span>
-            <textarea rows="5" :placeholder="form.description.placeholder" class="input textarea" v-model="form.description.value"/></textarea>
+            <textarea maxlength="200" rows="5" :placeholder="form.description.placeholder" class="input textarea  focus:outline-none focus:bg-white focus:border-purple-500" v-model="form.description.value"/></textarea>
+            <span class="text-sm mt-2" v-text="(200 - form.description.value.length)"></span>
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.description.error"
@@ -74,7 +75,7 @@
 
           <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.cnpj.name }}</span>
-            <input type="text" :placeholder="form.cnpj.placeholder" class="input" v-model="form.cnpj.value"/>
+            <input type="text" :placeholder="form.cnpj.placeholder" class="input focus:outline-none focus:bg-white focus:border-purple-500" v-model="form.cnpj.value"/>
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.cnpj.error"
@@ -83,7 +84,7 @@
 
           <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.cpf.name }}</span>
-            <input type="text" :placeholder="form.cpf.placeholder" class="input" v-model="form.cpf.value"/>
+            <input type="text" :placeholder="form.cpf.placeholder" class="input focus:outline-none focus:bg-white focus:border-purple-500" v-model="form.cpf.value"/>
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.cpf.error"
@@ -92,7 +93,7 @@
 
           <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.nameCompany.name }}</span>
-            <input type="text" :placeholder="form.nameCompany.placeholder" class="input" v-model="form.nameCompany.value"/>
+            <input type="text" :placeholder="form.nameCompany.placeholder" class="input focus:outline-none focus:bg-white focus:border-purple-500" v-model="form.nameCompany.value"/>
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.nameCompany.error"
@@ -101,7 +102,7 @@
 
           <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.nomeCompanyFantasy.name }}</span>
-            <input type="text" :placeholder="form.nomeCompanyFantasy.placeholder" class="input" v-model="form.nomeCompanyFantasy.value"/>
+            <input type="text" :placeholder="form.nomeCompanyFantasy.placeholder" class="input focus:outline-none focus:bg-white focus:border-purple-500" v-model="form.nomeCompanyFantasy.value"/>
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.nomeCompanyFantasy.error"
@@ -110,7 +111,7 @@
 
           <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.cep.name }}</span>
-            <input type="text" :placeholder="form.cep.placeholder" class="input" v-model="form.cep.value"/>
+            <input type="text" :placeholder="form.cep.placeholder" class="input focus:outline-none focus:bg-white focus:border-purple-500" v-model="form.cep.value"/>
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.cep.error"
@@ -151,7 +152,7 @@
 
           <!-- Habilitar quando for image upload <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.images.name }}</span>
-            <input type="file" multiple :placeholder="form.images.placeholder" class="input" @change="fileChange" />
+            <input type="file" multiple :placeholder="form.images.placeholder" class="input focus:outline-none focus:bg-white focus:border-purple-500" @change="fileChange" />
             <div
               v-for="(fileObj, index) in files"
               :key="index"
@@ -166,27 +167,27 @@
             >{{form.images.textError}}</span>
           </div> -->
 
-          <div class="mb-8 text-left">
+          <div class="text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.cover.name }}</span>
-            <input type="text" :placeholder="form.cover.placeholder" class="input" v-model="form.cover.value"/>
+            <input type="text" :placeholder="form.cover.placeholder" class="input focus:outline-none focus:bg-white focus:border-purple-500" v-model="form.cover.value"/>
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.cover.error"
             >{{form.cover.textError}}</span>
           </div>
 
-          <button
+          <!-- <button
             @click="add"
-            class="btn btn-large bg-purple-600 hover:bg-purple-500 text-white hidden lg:inline-block"
-          >Adicionar</button>
+            class="btn btn-large bg-green-600 hover:bg-green-500 text-white hidden lg:inline-block"
+          >Adicionar</button> -->
         </div>
 
-        <div class="w-full lg:max-w-400 mx-auto">
-          <div class="bg-gray-100 overflow-auto rounded mb-8" style="max-height: 400px">
+        <div class="w-full lg:max-w-400 mx-auto py-8">
+          <!-- <div class="bg-gray-100 overflow-auto rounded mb-8" style="max-height: 400px">
             <pre>
               {{form}}
             </pre>
-          </div>
+          </div> -->
 
           <div class="rounded overflow-hidden bg-white shadow-lg w-full mx-auto">
             <img
@@ -194,21 +195,23 @@
               src="https://tailwindcss.com/img/card-top.jpg"
               alt="Sunset in the mountains"
             />
-            <div class="px-6 py-4 pb-2">
-              <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
+            <div class="px-6 pt-4">
+              <div class="font-bold text-xl mb-2 fill-current">{{form.nameCompany.value ? form.nameCompany.value : 'Nome da empresa'}}</div>
               <p
                 class="text-gray-700 text-base"
-              >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
+              >{{form.description.value ? form.description.value : 'Descrição'}}</p>
             </div>
-            <div class="px-6 py-4">
-              <span class="badge m-1">#photography</span>
-              <span class="badge m-1">#travel</span>
-              <span class="badge m-1">#winter</span>
+            <div class="px-6 py-4 -mx-2">
+              <div class="inline-block" v-for="tag in form.tags.value" v-bind:key="tag.name">
+                <span class="badge m-1" v-if="tag.status == true">
+                  {{`#${tag.name}`}}
+                </span>
+              </div>
             </div>
           </div>
           <button
             @click="add"
-            class="btn btn-large bg-purple-600 hover:bg-purple-500 text-white w-full mt-8 inline-block lg:hidden"
+            class="btn btn-large bg-green-600 hover:bg-green-500 text-white w-full mt-8"
           >Adicionar</button>
         </div>
       </div>
@@ -353,15 +356,15 @@ export default {
     async add() {
       try {
         const fields = Object.keys(this.form)
-        
+
         const fieldValues = fields.reduce((obj, prop) => {
           const value = this.form[prop].value
           const newObj = { ...obj }
-          
+
           if (value) {
             newObj[prop] = value
           }
-          
+
           return newObj
         }, {})
 
@@ -379,7 +382,7 @@ export default {
           title: 'Muito bom!',
           text: 'Seu serviço foi criado com sucesso :)'
         })
-        
+
         // Habilitar quando for image upload
         // this.serviceId = docRef.id
         // await Promise.all(

@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class>
-      <div class="flex flex-wrap flex-col lg:flex-row">
+      <div class="container mx-auto pt-8 flex flex-wrap flex-col lg:flex-row">
         <div class="flex flex-col flex-1 lg:mr-8 lg:pr-8 overflow-y-auto" style="height: calc(100vh - 130px)">
           <div class="mb-8 text-left">
-            <h1 class="font-bold text-2xl text-purple-600">Adicionar meu negócio</h1>
+            <h1 class="font-bold text-2xl text-black text-center">Editar meu negócio</h1>
           </div>
 
           <div class="mb-8 text-left">
@@ -165,7 +165,7 @@
 
           <button
             @click="update"
-            class="btn btn-large bg-purple-600 hover:bg-purple-500 text-white hidden lg:inline-block"
+            class="btn btn-large bg-blue-600 hover:bg-blue-500 text-white hidden lg:inline-block"
           >Alterar</button>
         </div>
 
@@ -196,7 +196,7 @@
           </div>
           <button
             @click="update"
-            class="btn btn-large bg-purple-600 hover:bg-purple-500 text-white w-full mt-8 inline-block lg:hidden"
+            class="btn btn-large bg-blue-600 hover:bg-blue-500 text-white w-full mt-8 inline-block lg:hidden"
           >Alterar</button>
         </div>
       </div>
@@ -333,9 +333,9 @@ export default {
   async mounted() {
     try {
       await this.bindServices()
-      
+
       const { id } = this.$route.params
-      
+
       // find and clone deep
       let service = JSON.stringify(this.services.find(serv => serv.id === id) || {})
       service = JSON.parse(service)
@@ -371,7 +371,7 @@ export default {
       try {
         const { id } = this.$route.params
         const fields = Object.keys(this.form)
-        
+
         const fieldValues = fields.reduce((obj, prop) => {
           return  {
             ...obj,

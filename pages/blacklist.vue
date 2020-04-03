@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="mx-auto">
+    <div class="mx-auto mt-8">
       <h1 class="font-bold text-xl mb-2">Blacklist</h1>
 
       <div class="flex flex-wrap -m-4">

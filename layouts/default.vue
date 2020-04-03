@@ -3,10 +3,10 @@
     <div class="flex flex-wrap w-full">
       <div class="relative bg-white h-16 w-full"></div>
       <nav
-        class="fixed top-0 left-0 z-50 flex flex-wrap items-center justify-between navbar-expand-lg bg-white w-full border-b h-16 shadow"
+        class="fixed top-0 left-0 z-50 flex flex-wrap items-center justify-between navbar-expand-lg bg-white w-full border-b h-16 z-100"
       >
         <div class="w-full px-4 mx-auto flex flex-wrap items-center justify-between">
-          <div class="relative flex justify-between items-center">
+          <div class="relative w-1/3 flex justify-between items-center">
             <n-link
               to="/"
               class="text-md leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap text-black flex items-center"
@@ -16,35 +16,52 @@
             </n-link>
           </div>
 
-          <div class="menu hidden lg:flex items-center">
-            <ul class="flex flex-col lg:flex-row list-none ml-auto">
-              <li class="nav-item">
-                <n-link class="btn m-2 hover:bg-gray-100 text-black" to="/app">Onde comprar</n-link>
-                <n-link class="btn m-2 hover:bg-gray-100 text-black" to="/blacklist">Blacklist</n-link>
-              </li>
-            </ul>
+          <div class="menu w-1/3 hidden lg:flex items-center justify-center">
+            <n-link class="btn m-2 hover:bg-gray-25 text-black" to="/app">Onde comprar</n-link>
+            <n-link class="btn m-2 hover:bg-gray-25 text-black" to="/blacklist">Blacklist</n-link>
           </div>
 
-          <div class="hidden lg:flex">
+          <div class="hidden lg:flex justify-end w-1/3">
             <n-link
               class="btn-primary btn bg-purple-600 hover:bg-purple-500 text-white"
               to="/cadastro"
-            >Adicionar meu negócio</n-link>
+            >Enviar meu negócio</n-link>
           </div>
 
           <button
-            class="cursor-pointer leading-none rounded bg-purple-600 flex flex-col items-center justify-center lg:hidden w-8 h-8"
+            class="cursor-pointer bg-purple-600 hover:bg-purple-500 leading-none rounded-full flex flex-col items-center justify-center lg:hidden w-8 h-8 focus:outline-none focus:bg-purple-500 focus:border-purple-500"
             type="button"
+            @click="showMenu = !showMenu"
           >
-            <span class="block w-5 bg-white rounded" style="min-height: 2px"></span>
-            <span class="block w-5 bg-white rounded mt-1" style="min-height: 2px"></span>
-            <span class="block w-5 bg-white rounded mt-1" style="min-height: 2px"></span>
+            <span class="block w-4 bg-white rounded-full" style="min-height: 1px"></span>
+            <span class="block w-4 bg-white rounded-full mt-1" style="min-height: 1px"></span>
+            <span class="block w-4 bg-white rounded-full mt-1" style="min-height: 1px"></span>
           </button>
+          <div
+            v-show="showMenu"
+            class="block lg:hidden bg-white border-b p-8 w-full fixed left-0 z-100 shadow"
+            style="top: 4rem"
+          >
+            <div class="flex flex-col items-center justify-center" @click="showMenu = !showMenu">
+              <n-link
+                class="btn m-2 bg-gray-100 hover:bg-gray-200 text-black"
+                to="/app"
+              >Onde comprar</n-link>
+              <n-link
+                class="btn m-2 bg-gray-100 hover:bg-gray-200 text-black"
+                to="/blacklist"
+              >Blacklist</n-link>
+              <n-link
+                class="btn m-2 bg-gray-100 hover:bg-gray-200 text-black"
+                to="/cadastro"
+              >Enviar meu negócio</n-link>
+            </div>
+          </div>
         </div>
       </nav>
     </div>
 
-    <nuxt class="w-full mx-auto px-4 py-8" />
+    <nuxt class="w-full mx-auto px-4" />
   </div>
 </template>
 
@@ -90,11 +107,37 @@ export default {
         async: true
       }
     ]
+  },
+  data() {
+    return {
+      showMenu: true
+    };
   }
 };
 </script>
 
 <style>
+*::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #ffffff;
+  border-left: 1px solid #ebebeb;
+  border-right: 1px solid #ebebeb;
+  padding: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #ebebeb;
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #dcdcdc;
+}
+
 .btn {
   @apply font-bold py-2 px-4 rounded-full;
 }
@@ -107,13 +150,27 @@ export default {
   @apply bg-white px-4 py-3 text-base w-full border rounded-full text-black;
 }
 
+.input-sm {
+  @apply py-2 w-full;
+}
+
 .textarea {
   border-radius: 2rem;
   resize: none;
 }
 
 .badge {
-  @apply inline-block bg-gray-200 rounded-full px-3 py-2 text-sm font-semibold text-gray-700 leading-none;
+  @apply inline-block bg-gray-900 rounded-full px-3 py-2 text-sm font-semibold text-white leading-none;
+}
+
+.badge-select {
+  @apply inline-block bg-gray-100 border-2 border-gray-100 rounded-full px-3 py-2 text-sm font-semibold text-gray-700 leading-none cursor-pointer;
+  &:hover {
+    @apply bg-gray-200 border-purple-600;
+  }
+  &.active {
+    @apply bg-purple-600 border-purple-600 text-white;
+  }
 }
 
 .badge-lg {
@@ -121,9 +178,9 @@ export default {
 }
 
 .badge-black {
-  @apply bg-gray-600 text-white cursor-pointer;
+  @apply bg-purple-600 text-white cursor-pointer;
   &:hover {
-    @apply bg-gray-600;
+    @apply bg-gray-900;
   }
 }
 
@@ -180,6 +237,6 @@ export default {
 }
 
 .menu .active-link {
-  @apply bg-gray-900 text-white;
+  @apply bg-gray-100 text-black;
 }
 </style>
