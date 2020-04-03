@@ -72,7 +72,10 @@
             </div>
           </div>
 
-          <div class="mb-8 text-left">
+          <div
+            class="mb-8 text-left"
+            v-if="form.registerType.value == 'PJ'"
+          >
             <span class="block text-black text-lg mb-2 font-bold">{{ form.cnpj.name }}</span>
             <input type="text" :placeholder="form.cnpj.placeholder" class="input" v-model="form.cnpj.value"/>
             <span
@@ -81,7 +84,10 @@
             >{{form.cnpj.textError}}</span>
           </div>
 
-          <div class="mb-8 text-left">
+          <div
+            class="mb-8 text-left"
+            v-if="form.registerType.value == 'PF'"
+          >
             <span class="block text-black text-lg mb-2 font-bold">{{ form.cpf.name }}</span>
             <input type="text" :placeholder="form.cpf.placeholder" class="input" v-model="form.cpf.value"/>
             <span
