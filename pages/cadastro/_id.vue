@@ -72,16 +72,22 @@
             </div>
           </div>
 
-          <div class="mb-8 text-left">
+          <div
+            class="mb-8 text-left"
+            v-if="form.registerType.value == 'PJ'"
+          >
             <span class="block text-black text-lg mb-2 font-bold">{{ form.cnpj.name }}</span>
-            <input type="text" :placeholder="form.cnpj.placeholder" class="input" v-model="form.cnpj.value"/>
+            <input type="text" :placeholder="form.cnpj.placeholder" class="input" v-model="form.cnpj.value" @blur="loadCNPJ" />
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.cnpj.error"
             >{{form.cnpj.textError}}</span>
           </div>
 
-          <div class="mb-8 text-left">
+          <div
+            class="mb-8 text-left"
+            v-if="form.registerType.value == 'PF'"
+          >
             <span class="block text-black text-lg mb-2 font-bold">{{ form.cpf.name }}</span>
             <input type="text" :placeholder="form.cpf.placeholder" class="input" v-model="form.cpf.value"/>
             <span
@@ -90,7 +96,7 @@
             >{{form.cpf.textError}}</span>
           </div>
 
-          <div class="mb-8 text-left">
+          <div class="mb-8 text-left" v-if="!loadingCNPJ">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.nameCompany.name }}</span>
             <input type="text" :placeholder="form.nameCompany.placeholder" class="input" v-model="form.nameCompany.value"/>
             <span
@@ -99,7 +105,7 @@
             >{{form.nameCompany.textError}}</span>
           </div>
 
-          <div class="mb-8 text-left">
+          <div class="mb-8 text-left" v-if="!loadingCNPJ">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.nomeCompanyFantasy.name }}</span>
             <input type="text" :placeholder="form.nomeCompanyFantasy.placeholder" class="input" v-model="form.nomeCompanyFantasy.value"/>
             <span
@@ -108,7 +114,7 @@
             >{{form.nomeCompanyFantasy.textError}}</span>
           </div>
 
-          <div class="mb-8 text-left">
+          <div class="mb-8 text-left" v-if="!loadingCNPJ">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.cep.name }}</span>
             <input type="text" :placeholder="form.cep.placeholder" class="input" v-model="form.cep.value"/>
             <span
@@ -205,7 +211,9 @@
 </template>
 
 <script>
+import jsonpAdapter from 'axios-jsonp'
 import { mapGetters, mapActions } from 'vuex'
+
 export default {
   data() {
     return {
@@ -327,7 +335,8 @@ export default {
         // }
       },
       serviceId: '',
-      images: []
+        images: [],
+        loadingCNPJ: false
     }
   },
   async mounted() {
@@ -398,6 +407,36 @@ export default {
           title: 'error',
           text: error.message
         })
+      }
+    },
+
+    async loadCNPJ(event) {
+      try {
+        this.loadingCNPJ = true
+        const { value } = event.target
+        const { data } = await this.$axios({
+          method: 'GET',
+          url: `https://www.receitaws.com.br/v1/cnpj/${value}?`,
+          adapter: jsonpAdapter
+        })
+
+        const form = this.form
+        
+        form.nameCompany.value = data.nome
+        form.nomeCompanyFantasy.value = data.fantasia
+        form.cep.value = data.cep
+        
+        this.form = { ...form }
+      } catch (error) {
+        this.$swal({
+          icon: 'error',
+          showConfirmButton: false,
+          showCancelButton: true,
+          title: 'error',
+          text: error.message
+        })
+      } finally {
+        this.loadingCNPJ = false
       }
     }
   }
