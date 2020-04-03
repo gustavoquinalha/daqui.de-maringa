@@ -125,11 +125,11 @@
                 <img
                   class="w-full h-64 object-cover object-center"
                   :src="service.cover"
-                  :alt="service.nomeCompanyFantasy"
+                  :alt="service.name"
                 />
               </div>
               <div class="px-6 pt-4">
-                <div class="font-bold text-xl mb-2 fill-current">{{ service.nomeCompanyFantasy }}</div>
+                <div class="font-bold text-xl mb-2 fill-current">{{ service.name }}</div>
                 <p class="text-gray-700 text-base">{{ service.description }}</p>
               </div>
               <div class="px-6 pb-5 pt-4 w-full">
