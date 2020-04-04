@@ -192,7 +192,7 @@
 
           <!-- Habilitar quando for image upload <div class="mb-8 text-left">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.images.name }}</span>
-            <input type="file" multiple :placeholder="form.images.placeholder" class="input focus:outline-none focus:bg-white focus:border-purple-500" @change="fileChange" />
+            <input accept="image/*" type="file" multiple :placeholder="form.images.placeholder" class="input focus:outline-none focus:bg-white focus:border-purple-500" @change="fileChange" />
             <div
               v-for="(fileObj, index) in files"
               :key="index"
