@@ -112,7 +112,7 @@
             >{{form.cpf.textError}}</span>
           </div>
 
-          <div class="mb-8 text-left" v-if="!loadingCNPJ">
+          <div class="mb-8 text-left" v-if="!loadingCNPJ && form.registerType.value == 'PJ'">
             <span class="block text-black text-lg mb-2 font-bold">{{ form.nameCompany.name }}</span>
             <input
               type="text"
@@ -126,18 +126,18 @@
             >{{form.nameCompany.textError}}</span>
           </div>
 
-          <div class="mb-8 text-left" v-if="!loadingCNPJ">
-            <span class="block text-black text-lg mb-2 font-bold">{{ form.nomeCompanyFantasy.name }}</span>
+          <div class="mb-8 text-left" v-if="!loadingCNPJ && form.registerType.value == 'PJ'">
+            <span class="block text-black text-lg mb-2 font-bold">{{ form.nameCompanyFantasy.name }}</span>
             <input
               type="text"
-              :placeholder="form.nomeCompanyFantasy.placeholder"
+              :placeholder="form.nameCompanyFantasy.placeholder"
               class="input focus:outline-none focus:bg-white focus:border-purple-500"
-              v-model="form.nomeCompanyFantasy.value"
+              v-model="form.nameCompanyFantasy.value"
             />
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
-              v-if="form.nomeCompanyFantasy.error"
-            >{{form.nomeCompanyFantasy.textError}}</span>
+              v-if="form.nameCompanyFantasy.error"
+            >{{form.nameCompanyFantasy.textError}}</span>
           </div>
 
           <div class="mb-8 text-left">
@@ -148,10 +148,35 @@
               class="input focus:outline-none focus:bg-white focus:border-purple-500"
               v-model="form.cep.value"
             />
+            <!-- <PlaceField
+              :placeholder="form.cep.placeholder"
+              class="input focus:outline-none focus:bg-white focus:border-purple-500"
+              v-model="form.cep.value"
+            /> -->
             <span
               class="block text-red-600 text-sm mt-2 font-bold"
               v-if="form.cep.error"
             >{{form.cep.textError}}</span>
+          </div>
+
+          <div class="mb-8 text-left">
+            <span class="block text-black text-lg mb-2 font-bold">{{ form.cities.name }}</span>
+            <div
+              class="flex items-center"
+              v-for="city in form.cities.value"
+              v-bind:key="city.name"
+            >
+              <label class="inline-flex items-center cursor-pointer">
+                <input
+                  v-model="city.status"
+                  :value="city.status"
+                  type="checkbox"
+                  name="radio"
+                  class="form-checkbox h-4 w-4 text-purple-600 transition duration-150 ease-in-out"
+                />
+                <span class="ml-2 block text-lg leading-5 text-gray-900">{{city.name}}</span>
+              </label>
+            </div>
           </div>
 
           <div class="mb-8 text-left">
@@ -227,7 +252,7 @@
             <div class="top-0 left-0 p-2 absolute">
               <span
                 class="badge m-1"
-                v-for="tag in form.tags.value.filter(tag=>tag.status)"
+                v-for="tag in form.tags.value.filter(tag => tag.status)"
                 :key="tag.name"
               >{{ `#${tag.name}` }}</span>
             </div>
@@ -239,10 +264,10 @@
             <div class="px-6 pt-3 pb-5">
               <div
                 class="font-bold text-xl mb-2 fill-current"
-              >{{form.nameCompany.value ? form.nameCompany.value : 'Nome da empresa'}}</div>
+              >{{form.name.value ? form.name.value : 'Nome do negócio'}}</div>
               <p
                 class="text-gray-700 text-base"
-              >{{form.description.value ? form.description.value : 'Descrição'}}</p>
+              >{{form.description.value ? form.description.value : 'Descrição sobre o negócio'}}</p>
             </div>
           </div>
           <button
@@ -265,13 +290,15 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 import jsonpAdapter from 'axios-jsonp'
 import Auth from '@/components/Auth'
+import PlaceField from '@/components/PlaceField'
 
 export default {
   props: {
     editMode: false
   },
   components: {
-    Auth
+    Auth,
+    PlaceField
   },
   data() {
     return {
@@ -282,44 +309,37 @@ export default {
         name: {
           name: 'Nome',
           value: '',
-          placeholder: 'Placeholder nome',
+          placeholder: 'Nome do negocio',
           error: false,
-          textError: 'Erro name'
-        },
-        lastName: {
-          name: 'Sobrenome',
-          value: '',
-          placeholder: 'Placeholder sobrenome',
-          error: false,
-          textError: 'Erro sobrenome'
+          textError: ''
         },
         description: {
           name: 'Description',
           value: '',
-          placeholder: 'Placeholder description',
+          placeholder: 'Descrição',
           error: false,
-          textError: 'Erro description'
+          textError: ''
         },
         registerType: {
           name: 'Tipo do cadastro',
           value: 'PJ',
-          placeholder: 'Placeholder seila',
+          placeholder: 'Tipo de pessoa',
           error: false,
-          textError: 'Erro seila'
+          textError: ''
         },
         cnpj: {
           name: 'CNPJ',
           value: '',
-          placeholder: 'Placeholder CNPJ',
+          placeholder: 'Documetno CNPJ',
           error: false,
-          textError: 'Erro CNPJ'
+          textError: ''
         },
         cpf: {
           name: 'CPF',
           value: '',
-          placeholder: 'Placeholder CPF',
+          placeholder: 'Documento CPF',
           error: false,
-          textError: 'Erro CPF'
+          textError: ''
         },
         nameCompany: {
           name: 'Nome da sua empresa',
@@ -328,38 +348,45 @@ export default {
           error: false,
           textError: 'Erro nome empresa'
         },
-        nomeCompanyFantasy: {
-          name: 'Nome da sua empresa fantasia',
+        nameCompanyFantasy: {
+          name: 'Nome fantasia da sua empresa',
           value: '',
-          placeholder: 'Placeholder nome fantasia',
+          placeholder: 'Nome fantasia',
           error: false,
-          textError: 'Erro nome fantasia'
+          textError: ' fantasia'
         },
         cep: {
           name: 'CEP',
           value: '',
-          placeholder: 'Placeholder cep',
+          placeholder: 'Endereço de CEP',
           error: false,
-          textError: 'Erro cep'
+          textError: ''
+        },
+        cities: {
+          name: 'Cidades de atuação',
+          value: [],
+          error: false,
+          placeholder: 'Cidade',
+          textError: ''
         },
         delivery: {
-          name: 'Entrega',
+          name: 'Tipos de entrega',
           value: [],
           error: false,
-          textError: 'Erro tags'
+          textError: ''
         },
         tags: {
-          name: 'Tags',
+          name: 'Hashtags',
           value: [],
           error: false,
-          textError: 'Erro tags'
+          textError: ''
         },
         cover: {
           name: 'Foto da capa',
           value: 'https://tailwindcss.com/img/card-top.jpg',
           placeholder: 'URL da foto da capa',
           error: false,
-          textError: 'Erro na foto da capa'
+          textError: ''
         }
         // Habilitar quando for image upload
         // images: {
@@ -414,7 +441,6 @@ export default {
         }
       } else {
         // create mode
-        this.form.name.value = this.authUser.displayName
         this.form.tags.value = [...this.settingTags]
         this.form.delivery.value = [...this.settingDeliveries]
       }
@@ -456,7 +482,7 @@ export default {
 
         fieldValues.id = docRef.id
         fieldValues.owner = this.authUser.uid
-        fieldValues.tags = fieldValues.tags.filter(tag => tag.status)
+        fieldValues.tags = fieldValues.tags
         fieldValues.delivery = fieldValues.delivery.filter(delivery => delivery.status)
 
         await docRef.set(fieldValues)
@@ -512,7 +538,7 @@ export default {
 
         fieldValues.id = id
         fieldValues.owner = this.authUser.uid
-        fieldValues.tags = fieldValues.tags.filter(tag => tag.status)
+        fieldValues.tags = fieldValues.tags
         fieldValues.delivery = fieldValues.delivery.filter(delivery => delivery.status)
 
         const docRef = await this.$fireStore.collection('services').doc(id).set(fieldValues)
@@ -613,9 +639,12 @@ export default {
 
         const form = this.form
         
-        form.nameCompany.value = data.nome
-        form.nomeCompanyFantasy.value = data.fantasia
+        form.nomeCompany.value = data.fantasia
+        form.nameCompanyFantasy.value = data.fantasia
         form.cep.value = data.cep
+        form.empresa = {
+          value: data
+        }
         
         this.form = { ...form }
       } catch (error) {
