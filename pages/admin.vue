@@ -58,6 +58,23 @@
               </label>
             </div>
           </div>
+
+          <div class="mb-8 text-left">
+            <span class="block text-black text-lg mb-2 font-bold">{{ form.cities.name }}</span>
+            <input type="text" v-model="city" placeholder="City Name">
+            <button @click="addCity">Add</button>
+            <div
+              class="flex items-center"
+              v-for="city in form.cities.value"
+              v-bind:key="city.name"
+            >
+              <label class="inline-flex items-center cursor-pointer">
+                <span class="ml-2 block text-lg leading-5 text-gray-900">{{city.name}}</span>
+              </label>
+            </div>
+          </div>
+
+
         </div>
 
         <div class="w-full lg:max-w-400 mx-auto py-8">
@@ -99,6 +116,13 @@ export default {
         },
         tags: {
           name: 'Tags',
+          value: [
+          ],
+          error: false,
+          textError: 'Erro tags'
+        },
+        cities: {
+          name: 'Cidades',
           value: [
           ],
           error: false,
@@ -200,6 +224,20 @@ export default {
       this.form = newForm
       this.tag = ''
     },
+
+    addCity() {
+      let newForm = this.form
+      let cities = newForm.cities.value || []
+
+      cities.push({
+        name: this.city
+      })
+      
+      newForm.cities.value = cities
+
+      this.form = newForm
+      this.city = ''
+    }
   }
 }
 </script>
