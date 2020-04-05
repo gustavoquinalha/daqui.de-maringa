@@ -91,6 +91,7 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 import Auth from '@/components/Auth'
+import cities from '../server/data/cities'
 
 export default {
   components: {
@@ -136,7 +137,12 @@ export default {
   async mounted() {
     try {
       await this.bindSetting()
-
+      // let cities = await this.getCities();
+      // cities.filter((c: City) =>
+      //       dropSpecialChars(c.name)
+      //         .toLowerCase()
+      //         .indexOf(dropSpecialChars(name).toLowerCase()) > -1);
+     
       let setting = JSON.stringify(this.setting || {})
       setting = JSON.parse(setting)
   
@@ -237,6 +243,21 @@ export default {
 
       this.form = newForm
       this.city = ''
+    },
+
+    getCities() {
+      // get cities by /assets/data
+      // TODO implementar gatilho ao digitar no input
+    },
+
+    formattingCities() {
+      const a = 'àáäâãåăæçèéëêǵḧìíïîḿńǹñòóöôœṕŕßśșțùúüûǘẃẍÿź·/_,:;';
+      const b = 'aaaaaaaaceeeeghiiiimnnnoooooprssstuuuuuwxyz------';
+      const p = new RegExp(a.split('').join('|'), 'g');
+      ​
+      export function dropSpecialChars(str) {
+        return str.toString().replace(p, c => b.charAt(a.indexOf(c)));
+      }
     }
   }
 }
