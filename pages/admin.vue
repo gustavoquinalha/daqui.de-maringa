@@ -58,23 +58,6 @@
               </label>
             </div>
           </div>
-
-          <div class="mb-8 text-left">
-            <span class="block text-black text-lg mb-2 font-bold">{{ form.cities.name }}</span>
-            <input type="text" v-model="city" placeholder="City Name">
-            <button @click="addCity">Add</button>
-            <div
-              class="flex items-center"
-              v-for="city in form.cities.value"
-              v-bind:key="city.name"
-            >
-              <label class="inline-flex items-center cursor-pointer">
-                <span class="ml-2 block text-lg leading-5 text-gray-900">{{city.name}}</span>
-              </label>
-            </div>
-          </div>
-
-
         </div>
 
         <div class="w-full lg:max-w-400 mx-auto py-8">
@@ -91,7 +74,6 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 import Auth from '@/components/Auth'
-import cities from '../server/data/cities'
 
 export default {
   components: {
@@ -122,13 +104,6 @@ export default {
           error: false,
           textError: 'Erro tags'
         },
-        cities: {
-          name: 'Cidades',
-          value: [
-          ],
-          error: false,
-          textError: 'Erro tags'
-        },
       },
       tag: '',
       delivery: ''
@@ -137,12 +112,7 @@ export default {
   async mounted() {
     try {
       await this.bindSetting()
-      // let cities = await this.getCities();
-      // cities.filter((c: City) =>
-      //       dropSpecialChars(c.name)
-      //         .toLowerCase()
-      //         .indexOf(dropSpecialChars(name).toLowerCase()) > -1);
-     
+
       let setting = JSON.stringify(this.setting || {})
       setting = JSON.parse(setting)
   
@@ -230,35 +200,6 @@ export default {
       this.form = newForm
       this.tag = ''
     },
-
-    addCity() {
-      let newForm = this.form
-      let cities = newForm.cities.value || []
-
-      cities.push({
-        name: this.city
-      })
-      
-      newForm.cities.value = cities
-
-      this.form = newForm
-      this.city = ''
-    },
-
-    getCities() {
-      // get cities by /assets/data
-      // TODO implementar gatilho ao digitar no input
-    },
-
-    formattingCities() {
-      const a = 'àáäâãåăæçèéëêǵḧìíïîḿńǹñòóöôœṕŕßśșțùúüûǘẃẍÿź·/_,:;';
-      const b = 'aaaaaaaaceeeeghiiiimnnnoooooprssstuuuuuwxyz------';
-      const p = new RegExp(a.split('').join('|'), 'g');
-      ​
-      export function dropSpecialChars(str) {
-        return str.toString().replace(p, c => b.charAt(a.indexOf(c)));
-      }
-    }
   }
 }
 </script>
