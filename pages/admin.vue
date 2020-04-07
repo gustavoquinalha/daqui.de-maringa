@@ -91,7 +91,7 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 import Auth from '@/components/Auth'
-import cities from '../server/data/cities'
+//import cities from '../server/data/cities'
 
 export default {
   components: {
@@ -250,14 +250,11 @@ export default {
       // TODO implementar gatilho ao digitar no input
     },
 
-    formattingCities() {
+    dropSpecialChars(str) {
       const a = 'àáäâãåăæçèéëêǵḧìíïîḿńǹñòóöôœṕŕßśșțùúüûǘẃẍÿź·/_,:;';
       const b = 'aaaaaaaaceeeeghiiiimnnnoooooprssstuuuuuwxyz------';
       const p = new RegExp(a.split('').join('|'), 'g');
-      ​
-      export function dropSpecialChars(str) {
-        return str.toString().replace(p, c => b.charAt(a.indexOf(c)));
-      }
+      return str.toString().replace(p, c => b.charAt(a.indexOf(c)));
     }
   }
 }
