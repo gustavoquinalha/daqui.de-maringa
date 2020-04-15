@@ -85,7 +85,7 @@
           </div>
 
           <button
-            class="btn btn-large bg-purple-600 hover:bg-purple-500 text-white hidden lg:inline-block"
+            class="btn btn-large bg-green-600 hover:bg-green-500 text-white hidden lg:inline-block"
           >Adicionar</button>
         </div>
 
