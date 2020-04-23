@@ -131,7 +131,8 @@ export default {
         },
       },
       tag: '',
-      delivery: ''
+      delivery: '',
+      city: ''
     }
   },
   async mounted() {

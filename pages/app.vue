@@ -69,17 +69,17 @@
 
             <div class="text-left w-full mb-6">
               <span class="block text-black mb-1 font-bold">Entrega</span>
-              <div class="flex items-center" v-for="dlvr in delivery" v-bind:key="dlvr.name">
+              <div class="flex items-center" v-for="delivery in deliveries" v-bind:key="delivery.name">
                 <label class="inline-flex items-center cursor-pointer">
                   <input
-                    v-model="dlvr.status"
-                    :value="dlvr.status"
+                    v-model="delivery.status"
+                    :value="delivery.status"
                     type="checkbox"
                     name="delivery"
                     class="form-checkbox h-4 w-4 text-purple-600 transition duration-150 ease-in-out"
-                    @input="toggleDelivery(dlvr)"
+                    @input="toggleDelivery(delivery)"
                   />
-                  <span class="ml-2 block text-lg leading-5 text-gray-900">{{dlvr.name}}</span>
+                  <span class="ml-2 block text-lg leading-5 text-gray-900">{{delivery.name}}</span>
                 </label>
               </div>
             </div>
@@ -95,7 +95,7 @@
         <div class="flex flex-wrap -m-4 flex-grow-1 w-full mx-auto my-4 md:my-4 h-full">
           <div
             class="w-full lg:w-1/2 xl:w-1/3 p-4"
-            v-for="service in servicesFiltred"
+            v-for="service in filtred"
             v-bind:key="service.id"
           >
             <div
@@ -170,23 +170,51 @@ export default {
         width: 0
       },
       showFilter: true,
-      search: "",
-      tags: [],
-      delivery: [],
-      servicesFiltred: []
+      search: '',
+      selectedTags: [],
+      selectedDeliveries: []
     };
   },
   computed: {
-    ...mapGetters(["services", 'settingDeliveries', 'settingTags']),
-    ...mapState(["authUser"])
+    ...mapGetters(['services', 'settingCities', 'settingTags', 'settingDeliveries', 'services']),
+    ...mapState(['authUser', 'city']),
+    tags() {
+      return this.settingTags
+    },
+    deliveries() {
+      return this.settingDeliveries
+    },
+    tags() {
+      return this.settingTags
+    },
+    filtred: {
+      get() {
+        let filtred = this.services
+  
+        filtred = filtred.filter(row => {
+          return this.search ? String(row.name).toLowerCase().indexOf(String(this.search).toLowerCase()) != -1 : true
+        })
+
+        if (this.selectedTags.length) {
+          filtred = filtred.filter(service => {
+            return service.tags.find(tag => this.selectedTags.includes(tag.name))
+          })
+        }
+
+        if (this.selectedDeliveries.length) {
+          filtred = filtred.filter(service => {
+            return service.delivery.find(delivery => this.selectedDeliveries.includes(delivery.name))
+          })
+        }
+  
+        return filtred
+      }
+    }
   },
-  async mounted() {
+  mounted() {
     try {
-      await this.bindSetting();
-      await this.bindServices();
-      this.tags = [...this.settingTags]
-      this.delivery = [...this.settingDeliveries]
-      this.servicesFiltred = this.services
+      this.bindSetting()
+      this.bindServices()
     } catch (error) {
       this.$swal({
         icon: "error",
@@ -223,30 +251,12 @@ export default {
     
     toggleTag(tag) {
       tag.status = !tag.status
-      
-      const tags = this.tags.filter(tag => tag.status).map(tag => tag.name)
-
-      if (tags.length) {
-        this.servicesFiltred = this.services.filter(service => {
-          return service.tags.find(tag => tags.includes(tag.name))
-        })
-      } else {
-        this.servicesFiltred = this.services
-      }
+      this.selectedTags = this.tags.filter(tag => tag.status).map(tag => tag.name)
     },
     
     toggleDelivery(delivery) {
       delivery.status = !delivery.status
-      
-      const deliveries = this.delivery.filter(delivery => delivery.status).map(delivery => delivery.name)
-
-      if (deliveries.length) {
-        this.servicesFiltred = this.services.filter(service => {
-          return service.delivery.find(delivery => deliveries.includes(delivery.name))
-        })
-      } else {
-        this.servicesFiltred = this.services
-      }
+      this.selectedDeliveries = this.deliveries.filter(delivery => delivery.status).map(delivery => delivery.name)
     },
   }
 };

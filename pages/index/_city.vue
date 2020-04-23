@@ -40,11 +40,10 @@
           </div>
         </div>
       </div>
-
       <div class="mb-8 flex items-center justify-center flex-wrap text-center">
         <button
           type="button"
-          v-for="tag in settingTags"
+          v-for="tag in tags"
           class="badge badge-lg badge-select m-1 focus:outline-none focus:border-purple-500"
           :class="{active : tag.status}"
           @click="toggleTag(tag)"
@@ -55,7 +54,7 @@
       <div class="flex flex-wrap -m-4 flex-grow-1 w-full mx-auto h-full">
         <div
           class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4"
-          v-for="service in filtred"
+          v-for="service in servicesFiltred"
           v-bind:key="service.id"
         >
           <div class="card h-full rounded overflow-hidden shadow hover:shadow-lg hover:text-purple-600 relative cursor-pointer">
@@ -110,52 +109,26 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
-
+import { mapState, mapGetters, mapActions } from "vuex"
 export default {
   components: {},
   data() {
     return {
-      search: '',
-      selectedTags: [],
-      selectedDeliveries: []
+      search: "",
+      tags: [],
+      servicesFiltred: []
     }
   },
   computed: {
-    ...mapGetters(['services', 'settingCities', 'settingTags', 'services']),
-    ...mapState(['authUser', 'city']),
-    deliveries() {
-      return this.settingDeliveries
-    },
-    tags() {
-      return this.settingTags
-    },
-    filtred() {
-      let filtred = this.services
-
-      filtred = filtred.filter(row => {
-        return this.search ? String(row.name).toLowerCase().indexOf(String(this.search).toLowerCase()) != -1 : true
-      })
-
-      if (this.selectedTags.length) {
-        filtred = filtred.filter(service => {
-          return service.tags.find(tag => this.selectedTags.includes(tag.name))
-        })
-      }
-
-      if (this.selectedDeliveries.length) {
-        filtred = filtred.filter(service => {
-          return service.delivery.find(delivery => this.selectedDeliveries.includes(delivery.name))
-        })
-      }
-
-      return filtred
-    }
+    ...mapGetters(['settingTags', "services", 'settingCities']),
+    ...mapState(["authUser", 'city'])
   },
-  mounted() {
+  async mounted() {
     try {
-      this.bindSetting()
-      this.bindServices()
+      await this.bindSetting()
+      await this.bindServices()
+      this.tags = [...this.settingTags]
+      this.servicesFiltred = this.services
     } catch (error) {
       this.$swal({
         icon: "error",
@@ -172,15 +145,19 @@ export default {
     edit(service) {
       this.$router.replace({ path: `/cadastro/${service.id}` })
     },
-    
+
     toggleTag(tag) {
       tag.status = !tag.status
-      this.selectedTags = this.tags.filter(tag => tag.status).map(tag => tag.name)
-    },
-    
-    toggleDelivery(delivery) {
-      delivery.status = !delivery.status
-      this.selectedDeliveries = this.deliveries.filter(delivery => delivery.status).map(delivery => delivery.name)
+      
+      const tags = this.tags.filter(tag => tag.status).map(tag => tag.name)
+
+      if (tags.length) {
+        this.servicesFiltred = this.services.filter(service => {
+          return service.tags.find(tag => tags.includes(tag.name))
+        })
+      } else {
+        this.servicesFiltred = this.services
+      }
     },
   },
   watch: {
