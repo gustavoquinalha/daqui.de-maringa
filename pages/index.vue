@@ -113,6 +113,11 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
+  fetch({ store }) {
+    if (window.location.pathname.length <= 1) {
+      window.history.pushState('', '', `/${store.state.city}`)
+    } 
+  },
   components: {},
   data() {
     return {
@@ -185,7 +190,7 @@ export default {
   },
   watch: {
     city(val) {
-      window.location.pathname = `/${val}`
+      window.history.pushState('', '', `/${val}`)
     }
   }
 }

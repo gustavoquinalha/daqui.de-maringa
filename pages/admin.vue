@@ -50,12 +50,13 @@
             <button @click="addTag">Add</button>
             <div
               class="flex items-center"
-              v-for="tag in form.tags.value"
+              v-for="(tag, index) in form.tags.value"
               v-bind:key="tag.name"
             >
               <label class="inline-flex items-center cursor-pointer">
                 <span class="ml-2 block text-lg leading-5 text-gray-900">{{tag.name}}</span>
               </label>
+              <button @click="removeTag(index)">remove</button>
             </div>
           </div>
 
@@ -256,6 +257,21 @@ export default {
       const b = 'aaaaaaaaceeeeghiiiimnnnoooooprssstuuuuuwxyz------';
       const p = new RegExp(a.split('').join('|'), 'g');
       return str.toString().replace(p, c => b.charAt(a.indexOf(c)));
+    },
+
+    editTag(tag, index) {
+      this.form.tags.value = this.form.tags.value.map((_tag_, _index_) => {
+        if (_index_ === index) {
+          return tag
+        }
+        return _tag_
+      })
+
+      this.form = { ...this.form }
+    },
+    removeTag(index) {
+      this.form.tags.value = this.form.tags.value.filter((tag, _index_) => _index_ != index)
+      this.form = { ...this.form }
     }
   }
 }

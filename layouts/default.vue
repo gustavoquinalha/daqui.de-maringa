@@ -11,8 +11,8 @@
               to="/"
               class="text-md leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap text-black flex items-center"
             >
-              Serviços/
-              <span class="block font-bold">{{ city }}</span>
+              Serviços daqui de
+              <span class="block font-bold ml-1">{{ city }}</span>
             </n-link>
           </div>
 
