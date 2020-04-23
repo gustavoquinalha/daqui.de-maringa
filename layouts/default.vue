@@ -12,7 +12,7 @@
               class="text-md leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap text-black flex items-center"
             >
               Serviços/
-              <span class="block font-bold">Maringá</span>
+              <span class="block font-bold">{{ city }}</span>
             </n-link>
           </div>
 
@@ -153,7 +153,7 @@ export default {
     await this.bindSetting()
   },
   computed: {
-    ...mapState(['authUser']),
+    ...mapState(['authUser', 'city']),
     ...mapGetters(['isLogged'])
   },
   methods: {

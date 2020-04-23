@@ -3,7 +3,8 @@ import { vuexfireMutations, firestoreAction } from 'vuexfire'
 export const state = () => ({
   services: [],
   authUser: {},
-  setting: {}
+  setting: {},
+  city: 'Maringa'
 })
 
 export const mutations = {
@@ -11,6 +12,14 @@ export const mutations = {
 
   SET_AUTH_USER(state, authUser) {
     state.authUser = authUser
+  },
+
+  SET_CITY(state, city) {
+    state.city = city
+  },
+
+  SET_SERVICES(state, services) {
+    state.services = services
   }
 }
 
@@ -70,6 +79,9 @@ export const getters = {
   },
   settingDeliveries(state) {
     return state.setting.delivery && state.setting.delivery.map(delivery => ({ name: delivery.name, status: false })) || []
+  },
+  settingCities(state) {
+    return state.setting.cities && state.setting.cities.map(city => ({ name: city.name, status: false })) || []
   },
   isLogged(state) {
     return state.authUser && state.authUser.uid
